@@ -1,0 +1,21 @@
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgb(208, 208, 208);
+}
+
+.header-icon{
+  margin-left: 20px;
+}
+
+.header-title{
+  font-size: large;
+  font-weight: bold;
+}
+
+.header-signin-button{
+  padding: 5px 15px;
+  margin-right: 20px;
+}
