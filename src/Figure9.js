@@ -1,4 +1,4 @@
-import "./Figure7.css"
+import "./Figure9.css"
 import { Bar } from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -9,46 +9,50 @@ function statistic(data){  //each cell is stored as {value: cell}
     // header + data
     const headers = data[0].map(item => item.value);
     const dataRows = data.slice(1);
-    // index
+    // index 
     const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
     const durations = ["30", "80"]
-    const limitations = ["P","T"]
-    // 计算每个limit下，每个年份下，每个senario下的求和
+    const categories = ["uniform","history","developed"] // all + well count + main country (condition)
+    // index
+    const historyIndex = headers.indexOf("Well Count")
+    const developedIndex = headers.indexOf("Majority Country")
+    const developedCountry = ["Canada", "USA", "Norway", "UK", "Australia","Netherlands", "China", "Denmark", "Germany", "Japan"]
+    // 计算每个categories下，每个年份下，每个senario下的求和
     const dataStatistic = {};
     durations.forEach((duration) =>{
         dataStatistic[duration]={}
         senarios.forEach((senario) =>{
             dataStatistic[duration][senario] = {}
-            // get index 
-            const storageIndex = headers.indexOf(senario + '_' + duration);
+            // get index -- use to sum 
+            const storageIndex = headers.indexOf(senario + '_' + duration); 
             // inital
-            limitations.forEach((limitation) =>{
-                dataStatistic[duration][senario][limitation] = 0
+            categories.forEach((category) =>{
+                dataStatistic[duration][senario][category] = 0
             })
             // update  -- now we have now which column we are gonna use. Now iterate the row
             dataRows.forEach((datarow) =>{
-                //  && datarow[storageIndex+1].value === ("P" || "T")
-                if (datarow[storageIndex+1] && (datarow[storageIndex+1].value === "P" || datarow[storageIndex+1].value === "T")){ // if limitation is valid
-                    { if (datarow[storageIndex+1].value === 0) console.log(storageIndex)
-                    if(datarow[storageIndex] && datarow[storageIndex].value !== "NaN")  // if storage is valid
-                        dataStatistic[duration][senario][datarow[storageIndex+1].value] += datarow[storageIndex].value
-                      }  
+                // judge wheather the sum value is valid
+                if (datarow[storageIndex] && datarow[storageIndex].value !== "NaN"){
+                    // uniform
+                    dataStatistic[duration][senario]["uniform"] += datarow[storageIndex].value
+                    // history
+                    if (datarow[historyIndex] && datarow[historyIndex].value >= 100)
+                        dataStatistic[duration][senario]["history"] += datarow[storageIndex].value
+                    // developed
+                    if (datarow[developedIndex] && developedCountry.includes(datarow[developedIndex].value))
+                        dataStatistic[duration][senario]["developed"] += datarow[storageIndex].value
                 }
             })
-            // culculate the percent
-            const total = dataStatistic[duration][senario]["T"] + dataStatistic[duration][senario]["P"] 
-            dataStatistic[duration][senario]["T"] = dataStatistic[duration][senario]["T"]/total
-            dataStatistic[duration][senario]["P"] = dataStatistic[duration][senario]["P"]/total  
         })
     })
-    return {dataStatistic, senarios, limitations}
+    return {dataStatistic, senarios, categories}
 }
 
 function prepareData(props){
     const labels = props.data.senarios
-    const datasets = props.data.limitations.map((limitation) =>{
+    const datasets = props.data.categories.map((category) =>{
         return {
-        label: limitation,
+        label: category,
         data: [],
         backgroundColor: getRandomColor(),
       }
@@ -74,7 +78,7 @@ function getRandomColor() {
   }
 
 // chart component
-function ChartComponentFigure7(props){
+function ChartComponentFigure9(props){
     // prepare date for chart
     const chartData = prepareData(props)
     // return
@@ -83,26 +87,23 @@ function ChartComponentFigure7(props){
         maintainAspectRatio: false,  // 防止保持原始宽高比
         scales: { 
             x: { 
-                stacked: true,
+                stacked: false,
                 title: {
                     display: true,
                     text: 'Senario'
                 }
             },
             y: { 
-                stacked: true,
+                stacked: false,
                 title: {
                     display: true,
-                    text: 'Persentage of Storage resource'
-                  },
-                max: 1, // 最大刻度
-                min: 0,  // 最小刻度
-                ticks: {
-                    stepSize: 0.2, // 刻度间隔
-                }, 
-            },
-        } 
-    }
+                    text: 'Storage Capacity'
+                },
+
+            }, 
+        },
+    } 
+
 
     const style = {
         width: "50vw"
@@ -112,18 +113,19 @@ function ChartComponentFigure7(props){
 
 }
 
-export function Figure7(props){    // props => data
+export function Figure9(props){    // props => data
     // judge
     if (!props.data.length) return <div></div>
     // statistic
     const statisticData = statistic(props.data)
+    console.log(statisticData)
     return (
         <div className="data-map-box">
             <div>
-                <ChartComponentFigure7 data={statisticData} duration='30' />
+                <ChartComponentFigure9 data={statisticData} duration='30' />
             </div>
             <div>
-                <ChartComponentFigure7 data={statisticData} duration='80' />
+                <ChartComponentFigure9 data={statisticData} duration='80' />
             </div>
         </div>
     )

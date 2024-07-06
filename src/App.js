@@ -7,6 +7,7 @@ import {Data} from './Data';
 import {Figure6} from './Figure6';
 import {Figure7} from './Figure7';
 import {Figure8} from './Figure8';
+import {Figure9} from './Figure9';
 
 
 function App() {
@@ -36,10 +37,11 @@ function App() {
       <Header />
       <div className='body'>
         <Nav />
-        {/*<Data data={data}/>*/}
-        {/* <Figure6 data={data}/> */}
+        {/* <Data data={data}/> */}
+        <Figure6 data={data}/>
         {/* <Figure7 data={data}/> */}
-        <Figure8 data={data}/>
+        {/* <Figure8 data={data}/> */}
+        {/* <Figure9 data={data}/> */}
 
 
       </div>
