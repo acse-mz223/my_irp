@@ -38,9 +38,9 @@ function App() {
       <div className='body'>
         <Nav />
         {/* <Data data={data}/> */}
-        <Figure6 data={data}/>
+        {/* <Figure6 data={data}/> */}
         {/* <Figure7 data={data}/> */}
-        {/* <Figure8 data={data}/> */}
+        <Figure8 data={data}/>
         {/* <Figure9 data={data}/> */}
 
 

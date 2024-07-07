@@ -1,0 +1,16 @@
+.figure8-div{
+    width: 100%;
+    height: 80vh;
+}
+
+.filter-inputs{
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+
+.filter-input{
+    display: flex;
+    flex-direction: row;
+    padding-right: 20px;
+}
