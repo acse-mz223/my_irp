@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom"
 import * as XLSX from 'xlsx';
-import './App.css';
-import { Header } from './header';
-import { Nav } from './nav';
+import {MainPage} from './MainPage'
 import {Data} from './Data';
 import {Figure6} from './Figure6';
 import {Figure7} from './Figure7';
@@ -10,7 +9,7 @@ import {Figure8} from './Figure8';
 import {Figure9} from './Figure9';
 
 
-function App() {
+export function App(){
   // get data
   // set state
   const [data, setData] = useState([]);
@@ -31,22 +30,44 @@ function App() {
         setData(formattedData);
       });
   }, []);
-  
-  return (
-    <div>
-      <Header />
-      <div className='body'>
-        <Nav />
-        {/* <Data data={data}/> */}
-        {/* <Figure6 data={data}/> */}
-        {/* <Figure7 data={data}/> */}
-        <Figure8 data={data}/>
-        {/* <Figure9 data={data}/> */}
 
+  // router
+  const router = createBrowserRouter([
+    {
+    path: "/",
+    element: <MainPage />,
+    children:[
+      {
+      path: "Data",
+      element: <Data data={data}/>
+      },
+      {
+      path: "Figure6",
+      element: <Figure6 data={data}/>
+      },
+      {
+      path: "Figure7",
+      element: <Figure7 data={data}/>
+      },
+      {
+      path: "Figure8",
+      element: <Figure8 data={data}/>
+      },
+      {
+      path: "Figure9",
+      element: <Figure9 data={data}/>
+      }
+    ]
+    }
+  ])
 
-      </div>
-    </div>
+return (
+    <RouterProvider router={router} >
+    </RouterProvider>
+
   );
+
 }
+
 
 export default App;
