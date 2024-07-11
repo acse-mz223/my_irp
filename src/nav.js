@@ -13,10 +13,10 @@ export function Nav(){
                     <EarthIcon className="nav-div-icon" />
                     Data
                 </Link>
-                <div className="nav-div-figure">
+                <Link to="Distribution" className="nav-div-figure">
                     <PinIcon className="nav-div-icon" />
                     Data distribution map
-                    </div>
+                </Link>
             </div>
             <div className="nav-div">
                 <div className="nav-div-title">Data Analysis - basin</div>

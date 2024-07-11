@@ -7,6 +7,7 @@ import {Figure6} from './Figure6';
 import {Figure7} from './Figure7';
 import {Figure8} from './Figure8';
 import {Figure9} from './Figure9';
+import { Distribution } from './Distribution';
 
 
 export function App(){
@@ -56,7 +57,11 @@ export function App(){
       {
       path: "Figure9",
       element: <Figure9 data={data}/>
-      }
+      },
+      {
+        path: "Distribution",
+        element: <Distribution data={data}/>
+        }
     ]
     }
   ])
