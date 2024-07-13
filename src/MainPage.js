@@ -8,10 +8,9 @@ export function MainPage() {
   return (
     <div>
       <Header />
-      <div className='body'>
+      <div className='main-body'>
           <Nav />
-          <div>XXX</div>
-          <Outlet />
+          <Outlet/>
       </div>
     </div>
   );

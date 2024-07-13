@@ -2,17 +2,23 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-bottom: 20px;
-    border-bottom: 2px solid rgb(208, 208, 208);
+    align-items: center;
+    padding: 20px 20px 10px 20px;
+    border-bottom: 2px solid rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
   }
   
   .header-icon{
     margin-left: 20px;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 30px;
   }
   
   .header-title{
-    font-size: large;
-    font-weight: bold;
+    font-size: 30px;
+    font-weight: 800;
   }
   
   .header-signin-button{

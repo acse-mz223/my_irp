@@ -106,7 +106,7 @@ function ChartComponentFigure9(props){
 
 
     const style = {
-        width: "50vw"
+        width: "40vw"
     }
 
     return <Bar className="data-map" style={style} data={chartData} options={option} />;
@@ -120,12 +120,15 @@ export function Figure9(props){    // props => data
     const statisticData = statistic(props.data)
     console.log(statisticData)
     return (
-        <div className="data-map-box">
-            <div>
-                <ChartComponentFigure9 data={statisticData} duration='30' />
-            </div>
-            <div>
-                <ChartComponentFigure9 data={statisticData} duration='80' />
+        <div className="subpage">
+            <div className="subpage-title">Figure9</div>
+            <div className="data-map-box">
+                <div>
+                    <ChartComponentFigure9 data={statisticData} duration='30' />
+                </div>
+                <div>
+                    <ChartComponentFigure9 data={statisticData} duration='80' />
+                </div>
             </div>
         </div>
     )

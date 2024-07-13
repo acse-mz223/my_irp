@@ -101,7 +101,7 @@ function ChartComponent(props){
     }
 
     const style = {
-        width: "50%"
+        width: "40vw"
     }
 
     return <Bar className="data-map" style={style} data={chartData} options={option} />;
@@ -115,12 +115,15 @@ export function Figure6(props){
     const statisticData = statistic(props.data)
     // chart
     return(
-        <div className="data-map-box">
-            <div>
-                <ChartComponent data={statisticData} duration='30' />
-            </div>
-            <div>
-                <ChartComponent data={statisticData} duration='80' />
+        <div className="subpage">
+            <div className="subpage-title">Figure6</div>
+            <div className="data-map-box">
+                <div>
+                    <ChartComponent data={statisticData} duration='30' />
+                </div>
+                <div>
+                    <ChartComponent data={statisticData} duration='80' />
+                </div>
             </div>
         </div>
     )

@@ -9,8 +9,11 @@ function DataExcel(props){
 
 export function Data(props){
     return(
-        <div className="data-box">
-           <DataExcel data={props.data}/>
+        <div className="subpage">
+            <div className="subpage-title">Row data table</div>
+            <div className="data-box">
+                <DataExcel data={props.data}/>
+            </div>
         </div>
     )
 }

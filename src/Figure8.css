@@ -1,12 +1,24 @@
 .figure8-div{
     width: 100%;
-    height: 80vh;
+    height: 85vh;
+    background-color: aquamarine;
+    margin: 10px 10px;
+    margin: 0 10px;
+    position: relative;
 }
 
 .filter-inputs{
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 15px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index:1000;
+    background-color: rgba(255, 255, 255, 0.842);
+    border: none;
+    border-radius: 10px;
 }
 
 .filter-input{
@@ -14,3 +26,21 @@
     flex-direction: row;
     padding-right: 20px;
 }
+
+.filter-input-name{
+    font-size: 20px;
+    margin-right: 10px;
+    align-items: center;
+    display: flex;
+}
+
+.filter-input-selector{
+    border-radius: 5px;
+    padding: 6px 5px;
+    font-size: 18px;
+}
+
+.popup-info{
+    font-size: 13px;
+}
+

@@ -1,11 +1,25 @@
+.subpage{
+    display: flex;
+    flex-direction: column;
+    width: 86%;
+    align-items: center;
+    background-color: rgb(147, 147, 255);
+    padding: 10px;
 
+.subpage-title{
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+}
 
 .data-box{
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px grey;
     background-color: rgb(219, 219, 219);
-    width: 80%;
     overflow: scroll;
+    width: 95%;
 
 }

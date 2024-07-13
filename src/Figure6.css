@@ -1,9 +1,10 @@
 .data-map-box{
     height: 100%;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: rgba(218, 116, 116, 0.789);
+    background-color: rgba(251, 209, 209, 0.789);
+    justify-content: space-around;
 }
 
 .data-map{
