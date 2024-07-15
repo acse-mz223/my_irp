@@ -120,7 +120,7 @@ export function Figure9(props){    // props => data
     const statisticData = statistic(props.data)
     console.log(statisticData)
     return (
-        <div className="subpage">
+        <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure9</div>
             <div className="data-map-box">
                 <div>

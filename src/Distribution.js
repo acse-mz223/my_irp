@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import "./Distribution.css"
@@ -27,7 +27,7 @@ function prepareDataFun(data){
     return preparedData
 }
 
-export function Distribution(){
+export function Distribution(props){
     const [geoData, setGeoData] = useState(null);
 
     // fetch data
@@ -52,10 +52,20 @@ export function Distribution(){
     const corner2 = L.latLng(-90, 180);
     const bounds = L.latLngBounds(corner1, corner2);
 
+    // ref + initalmap
+    const myMapRef = useRef(null)
+    useEffect(() =>{
+        if (myMapRef.current){
+            myMapRef.current.invalidateSize();  // info map to redraw 
+        }
+    },[props.menuHidden])
+
+
     return (
-        <div className="subpage">
+        <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Data distribution map</div>
             <MapContainer center={[51.5074, -0.127758]} 
+              ref={myMapRef}
               zoom={5} 
               style={{ height: '100%', width: '100%' }}
               maxBounds={bounds} 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./Figure8.css"
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
@@ -131,9 +131,18 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
     const corner2 = L.latLng(-90, 180);
     const bounds = L.latLngBounds(corner1, corner2);
 
+    // ref + initalmap
+    const myMapRef = useRef(null)
+    useEffect(() =>{
+        if (myMapRef.current){
+            myMapRef.current.invalidateSize();  // info map to redraw 
+        }
+    },[props.menuHidden])
+
     //center={SetCenter(props.mapPara)}
     return (
       <MapContainer 
+        ref={myMapRef}
         center={[countryLocationData[props.mapPara.country]["latitude"], 
         countryLocationData[props.mapPara.country]["longitude"]]} 
         zoom={5} 
@@ -175,11 +184,11 @@ export function Figure8(props){ //props.data
 
     if (!props.data.length) return <div></div>
     return (
-        <div className="subpage">
+        <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure8</div>
             <div className="figure8-div">
                 <OptionComponents data={props.data} setMapParaFun={setMapParaFun} mapPara={mapPara}/>
-                <Map data={props.data} mapPara={mapPara}/>
+                <Map data={props.data} mapPara={mapPara} menuHidden={props.menuHidden}/>
             </div>
         </div>
     )

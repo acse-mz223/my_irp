@@ -9,7 +9,7 @@ function DataExcel(props){
 
 export function Data(props){
     return(
-        <div className="subpage">
+        <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Row data table</div>
             <div className="data-box">
                 <DataExcel data={props.data}/>

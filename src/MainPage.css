@@ -1,7 +1,6 @@
 .main-body{
   display: flex;
   flex-direction: row;
-  padding: 0 30px 20px 0;
   height: 85vh;
   background-color: rgb(227, 227, 227);
 }

@@ -4,7 +4,6 @@
     border: none;
     box-shadow: 1px 1px 10px grgb(205, 205, 205);
     display:flex;
-    margin-right: 1%;
     width: 12%;
     height: 100%;
     flex-direction: column;

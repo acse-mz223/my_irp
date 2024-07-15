@@ -32,35 +32,38 @@ export function App(){
       });
   }, []);
 
+  // state -- hide menu
+  const [menuHidden, setMenuHidden] = React.useState(false)
+
   // router
   const router = createBrowserRouter([
     {
     path: "/",
-    element: <MainPage />,
+    element: <MainPage setMenuHidden={setMenuHidden} menuHidden={menuHidden}/>,
     children:[
       {
       path: "Data",
-      element: <Data data={data}/>
+      element: <Data data={data} menuHidden={menuHidden}/>
       },
       {
       path: "Figure6",
-      element: <Figure6 data={data}/>
+      element: <Figure6 data={data} menuHidden={menuHidden}/>
       },
       {
       path: "Figure7",
-      element: <Figure7 data={data}/>
+      element: <Figure7 data={data} menuHidden={menuHidden}/>
       },
       {
       path: "Figure8",
-      element: <Figure8 data={data}/>
+      element: <Figure8 data={data} menuHidden={menuHidden}/>
       },
       {
       path: "Figure9",
-      element: <Figure9 data={data}/>
+      element: <Figure9 data={data} menuHidden={menuHidden}/>
       },
       {
         path: "Distribution",
-        element: <Distribution data={data}/>
+        element: <Distribution data={data} menuHidden={menuHidden}/>
         }
     ]
     }

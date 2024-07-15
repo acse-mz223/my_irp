@@ -5,6 +5,13 @@
     align-items: center;
     background-color: rgb(147, 147, 255);
     padding: 10px;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.subpage-full{
+    width: 100%;
+}
 
 .subpage-title{
     padding: 10px;
@@ -12,12 +19,11 @@
     font-size: 25px;
 }
 
-}
 
 .data-box{
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px grey;
+    box-shadow: 0 0 10px rgb(255, 181, 181);
     background-color: rgb(219, 219, 219);
     overflow: scroll;
     width: 95%;

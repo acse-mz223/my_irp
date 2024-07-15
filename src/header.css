@@ -7,9 +7,27 @@
     border-bottom: 2px solid rgb(230, 230, 230);
     background-color: rgb(255, 255, 255);
   }
+
+  .header-icon-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .header-menu{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px;
+  }
+
+  .header-menu:hover{
+    background-color: rgb(212, 212, 212);
+  }
   
   .header-icon{
-    margin-left: 20px;
+    margin-left: 30px;
     width: 60px;
     height: 60px;
     object-fit: cover;
