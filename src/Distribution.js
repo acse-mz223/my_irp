@@ -171,14 +171,22 @@ function Legend(props){
 
     return (
         <ul className='legend-box'>
-            <div className='mark mark1' id="mark1" onMouseOver={()=>{onHoverLabel("history",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}></div>
-            <label className='legend legend1' htmlFor="mark1">History</label>
-            <div className='mark mark2' id="mark2" onMouseOver={()=>{onHoverLabel("developed",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}></div>
-            <label className='legend legend2' htmlFor="mark2">Developed</label>
-            <div className='mark mark3' id="mark3" onMouseOver={()=>{onHoverLabel("both",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}></div>
-            <label className='legend legend3' htmlFor="mark3">Both</label>
-            <div className='mark mark4' id="mark4" onMouseOver={()=>{onHoverLabel("none",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}></div>
-            <label className='legend legend4' htmlFor="mark4">None</label>
+            <div className="legend-box-div" onMouseOver={()=>{onHoverLabel("history",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}>
+                <div className='mark mark1'></div>
+                <label className='legend'>History</label>
+            </div>
+            <div className="legend-box-div" onMouseOver={()=>{onHoverLabel("developed",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}>
+                <div className='mark mark2' ></div>
+                <label className='legend' >Developed</label>
+            </div>
+            <div className="legend-box-div" onMouseOver={()=>{onHoverLabel("both",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}>
+                <div className='mark mark3' ></div>
+                <label className='legend' >Both</label>
+            </div>
+            <div className="legend-box-div" onMouseOver={()=>{onHoverLabel("none",props.dataBasinName,props.myMapRef)}} onMouseOut={()=>{onHoverLabel("null",props.dataBasinName,props.myMapRef)}}>
+                <div className='mark mark4' ></div>
+                <label className='legend' >None</label>
+            </div>
         </ul>
     )
 }
