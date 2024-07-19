@@ -5,7 +5,11 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-function statistic(data){  //each cell is stored as {value: cell}
+function statistic(data){  
+    const dataBasinName={
+        history: [],
+        developed: []
+    }
     // header + data
     const headers = data[0].map(item => item.value);
     const dataRows = data.slice(1);
@@ -38,6 +42,7 @@ function statistic(data){  //each cell is stored as {value: cell}
                     // history
                     if (datarow[historyIndex] && datarow[historyIndex].value >= 100)
                         dataStatistic[duration][senario]["history"] += datarow[storageIndex].value
+                        
                     // developed
                     if (datarow[developedIndex] && developedCountry.includes(datarow[developedIndex].value))
                         dataStatistic[duration][senario]["developed"] += datarow[storageIndex].value
@@ -47,6 +52,8 @@ function statistic(data){  //each cell is stored as {value: cell}
     })
     return {dataStatistic, senarios, categories}
 }
+
+
 
 function prepareData(props){
     const labels = props.data.senarios

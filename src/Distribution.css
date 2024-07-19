@@ -1,1 +1,47 @@
+.distribution{
+    width: 100%;
+    height: 85vh;
+    background-color: aquamarine;
+    margin: 10px 10px;
+    margin: 0 10px;
+    position: relative;
+}
 
+.legend-box{
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.804);
+    padding: 30px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px rgba(180, 180, 180, 0.432);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+
+}
+
+.mark{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.mark1{
+    background-color: blue;
+}
+.mark2{
+    background-color: green;
+}
+.mark3{
+    background-color: red;
+}
+.mark4{
+    background-color: grey;
+}
+
+.legend{
+    font-size: 20px;
+    line-height: 35px;
+}

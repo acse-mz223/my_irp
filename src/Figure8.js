@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "./Figure8.css"
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, Circle, useMap } from 'react-leaflet';
 import { countryLocationData } from './countryLocationData';
+import { KMLLayer, statistic } from "./Distribution"
 import L from 'leaflet';
 
 
@@ -44,7 +45,15 @@ function OptionComponents(props){
         <div className="filter-inputs">
                 <div className="filter-input">
                     <div className='filter-input-name'>Country name:</div>
-                    <select className='filter-input-selector' value={props.mapPara["country"]} onChange={(event) =>{props.setMapParaFun("country",event)}}>
+                    <select className='filter-input-selector' value={props.mapPara["country"]} onChange={(event) =>{
+                            props.setMapParaFun("country",event);
+                            props.setBasinLayerShow((preValue)=>{
+                                return {
+                                    ...preValue,
+                                    "type": "filter"
+                                }
+                            })
+                        }}>
                         <OptionComponent property="Majority Country" data={props.data} />
                     </select>
                 </div>
@@ -62,6 +71,17 @@ function OptionComponents(props){
                 </div>
         </div>
     )
+}
+
+function DistributionMapButton(props){
+    return <button className='distribution-map-button' onClick={() =>{
+        props.setBasinLayerShow((preValue) =>{
+            return {
+                "layer": !preValue["layer"],
+                "type": "button"
+            }
+        })
+    }}>Basin layer</button>
 }
 
 function getPopUpInfo(header, dataRow, storageIndex){
@@ -155,8 +175,9 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
+        {props.basinLayerShow["type"] === "filter"? <SetCenter mapPara={props.mapPara} />:""}
+        {props.basinLayerShow["layer"] && <KMLLayer  dataBasinName={props.dataBasinName} />}
         {CircleComponent()} 
-        <SetCenter mapPara={props.mapPara} />
       </MapContainer>
     );
   }
@@ -171,6 +192,12 @@ export function Figure8(props){ //props.data
     })
     console.log(mapPara)
 
+    // basin button state
+    const [basinLayerShow, setBasinLayerShow] = useState({
+        layer: false,
+        type: "button"
+    })
+
     // state change
     function setMapParaFun(property,event){
         setMapPara((preValue) =>{
@@ -181,14 +208,22 @@ export function Figure8(props){ //props.data
         })
     }
 
+    // get developed + history name
+    let dataBasinName
+    if (props.data.length){
+        dataBasinName = statistic(props.data);
+        console.log("dataBasinName:", dataBasinName)
+    }
 
     if (!props.data.length) return <div></div>
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure8</div>
             <div className="figure8-div">
-                <OptionComponents data={props.data} setMapParaFun={setMapParaFun} mapPara={mapPara}/>
-                <Map data={props.data} mapPara={mapPara} menuHidden={props.menuHidden}/>
+                <OptionComponents data={props.data} setMapParaFun={setMapParaFun} mapPara={mapPara} setBasinLayerShow={setBasinLayerShow}/>
+                <DistributionMapButton setBasinLayerShow={setBasinLayerShow} />
+                <Map data={props.data} mapPara={mapPara} menuHidden={props.menuHidden} dataBasinName={dataBasinName} basinLayerShow={basinLayerShow}/>
+                
             </div>
         </div>
     )
