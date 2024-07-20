@@ -4,6 +4,10 @@ import 'leaflet/dist/leaflet.css';
 import "./Distribution.css"
 import L, { map } from 'leaflet';
 import omnivore from 'leaflet-omnivore';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { ReactComponent as DeleteButton } from './delete_icon.svg';
+
 
 // process data to GeoJSON data (GeometryCollection to FeatureCollection)
 function prepareDataFun(data){
@@ -58,6 +62,8 @@ export function statistic(data){
     return dataBasinName
 }
 
+
+
 export function KMLLayer(props) {
     const map = useMap();
 
@@ -93,17 +99,17 @@ export function KMLLayer(props) {
                 layer.on('click', (e) => {
                     // 弹窗显示属性信息
                     if (layer.feature && layer.feature.properties) {
-                        const props = layer.feature.properties;
+                        const layerProps = layer.feature.properties;
                         let popupContent = '<div class="popup-content">';
-                        popupContent += `<h3>${props['Basin Name']}</h3>`;
-                        popupContent += `<p><strong>Basin Type:</strong> ${props['Basin Type']}</p>`;
-                        popupContent += `<p><strong>Region:</strong> ${props['Region']}</p>`;
-                        popupContent += `<p><strong>Longitude:</strong> ${props['Longitude']}</p>`;
-                        popupContent += `<p><strong>Latitude:</strong> ${props['Latitude']}</p>`;
-                        // 添加更多属性按需要展示
+                        popupContent += `<h3>${layerProps['Basin Name']}</h3>`;
+                        popupContent += `<p><strong>Basin Type:</strong> ${layerProps['Basin Type']}</p>`;
+                        popupContent += `<p><strong>Region:</strong> ${layerProps['Region']}</p>`;
+                        popupContent += `<p><strong>Longitude:</strong> ${layerProps['Longitude']}</p>`;
+                        popupContent += `<p><strong>Latitude:</strong> ${layerProps['Latitude']}</p>`;
                         popupContent += '</div>';
 
-                        L.popup().setLatLng(e.latlng).setContent(popupContent).openOn(map);
+
+                        L.popup().setLatLng(e.latlng).setContent(popupContent).openOn(map)
                     }
                 });
                 
@@ -123,6 +129,14 @@ export function KMLLayer(props) {
                     });
                 })
 
+                // double click event
+                layer.on("dblclick", ()=>{
+                    if (layer.feature && layer.feature.properties) {
+                        const LayerProps = layer.feature.properties;
+                        props.popupMoreFunc(LayerProps['Basin Name'])
+                    }
+                })
+
             });
             
 
@@ -138,7 +152,7 @@ export function KMLLayer(props) {
     return null;
 }
 
-function Legend(props){
+function MapLegend(props){
     console.log("myMapRef:",props.myMapRef)
     function onHoverLabel(type,dataBasinName,myMapRef){
         
@@ -191,6 +205,122 @@ function Legend(props){
     )
 }
 
+function getBasinInfor(data,basinName){
+    // data
+    const headers = data[0].map(item => item.value);
+    const dataRows = data.slice(1);
+    let basinInfor = {}
+    // index
+    const nameIndex = headers.indexOf("Basin Name")
+    for (let i=0; i < dataRows.length; i++){
+        if (basinName === dataRows[i][nameIndex].value){
+            // basinInfor
+            headers.forEach(((property) =>{
+                const index = headers.indexOf(property)
+                basinInfor[property] = dataRows[i][index]? dataRows[i][index].value : ""
+            }))
+
+            break
+        }
+    }
+    return basinInfor
+}
+
+function BasicInforBoard({basinInfor}){
+    console.log('basinInfor:',basinInfor)
+    const inforHeader=["Basin Name","Basin Size Label","Majority Country","Attributing Countries","Region","Location Longitude","Location Latitude","QGIS Poly Area (km^2)","Well Count"]
+    return (
+        <div className='basic-infor-board'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Basic info</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {inforHeader.map((property) =>{
+                        return(
+                            <tr>
+                                <td>{property}</td>
+                                <td>{basinInfor[property]}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        </div>
+    )
+
+}
+
+ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+function CampacityInforBoard({basinInfor}){
+  const senarios = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  // data
+  const data = {
+    labels: senarios,
+    datasets: [
+      {
+        label: 'Duration = 30',
+        data: senarios.map((senario) =>{
+            return basinInfor[senario+"_30"]
+        }), 
+        borderColor: '#3e95cd',
+        backgroundColor: '#7bb6dd',
+        fill: false,
+        tension: 0.1
+      },
+      {
+        label: 'Duration = 80',
+        data: senarios.map((senario) =>{
+            return basinInfor[senario+"_80"]
+        }), 
+        borderColor: '#8e5ea2',
+        backgroundColor: '#c78ecf',
+        fill: false,
+        tension: 0.1
+      }
+    ]
+  };
+
+  // set
+  const options = {
+    plugins: {
+      legend: {
+        position: 'top' 
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: true, 
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Scenario'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Capacity'
+        }
+      }
+    },
+    responsive: true, 
+    maintainAspectRatio: false 
+  };
+
+  return (
+    <div style={{ height: "100%", width: "100%" }}>
+      <Line data={data} options={options} />
+    </div>
+  );
+}
+
+
 export function Distribution(props){
     // state
     const [geoData, setGeoData] = useState(null);
@@ -232,6 +362,55 @@ export function Distribution(props){
         dataBasinName = statistic(props.data);
         console.log("dataBasinName:", dataBasinName)
     }
+
+    // add infor the board
+    const [board, setBoard] = useState([])
+    const boardlist = []
+    function deleteOneBoard(key){
+        // update boardlist
+        const index = boardlist.indexOf(key)
+        boardlist.splice(index,1)
+        // update board
+        setBoard((preValue)=>{
+            return preValue.filter((item) =>{
+                if (item.key !== key) return true
+            })
+        })
+
+    }
+
+    function popupMoreFunc(basinName){
+        // check weather this basin is in board or not
+        let Inboard = false
+        boardlist.forEach((item) =>{
+            if (item === basinName.replace(/\s+/g, '')){
+                Inboard = true
+                alert("The basin has already in board")
+            }
+        })
+        if (!Inboard){
+            // add key in to boardlist
+            boardlist.push(basinName.replace(/\s+/g, ''))
+            console.log("boardlist:",boardlist)
+            // get info 
+            const basinInfor = getBasinInfor(props.data, basinName)
+            //infor board
+            const oneBoard = (
+                <div className='one-board' key={basinName.replace(/\s+/g, '')}>
+                    <DeleteButton className="delete-button" onClick={() =>{deleteOneBoard(basinName.replace(/\s+/g, ''))}}/>
+                    <BasicInforBoard basinInfor={basinInfor}/>
+                    <CampacityInforBoard basinInfor={basinInfor}/>
+                </div>
+            ) 
+            // board
+            setBoard((preValue) =>{
+                return [
+                    ...preValue,
+                    oneBoard
+                ]
+            })
+        }
+    }
     
     if (!props.data.length) return <div></div>
     return (
@@ -245,15 +424,19 @@ export function Distribution(props){
                 maxBounds={bounds} 
                 minZoom={2.2}
                 maxBoundsViscosity={1.0}
+                doubleClickZoom={false}
                 >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
                     {/* {geoData && <GeoJSON data={geoData} style={style}/>} */}
-                    <KMLLayer  dataBasinName={dataBasinName}/>
+                    <KMLLayer  dataBasinName={dataBasinName} popupMoreFunc={popupMoreFunc}/>
                 </MapContainer>
-                <Legend  dataBasinName={dataBasinName} myMapRef={myMapRef}/>
+                <MapLegend  dataBasinName={dataBasinName} myMapRef={myMapRef}/>
+                <div className='board'>
+                    {board}
+                </div>
             </div>
         </div>
       );
