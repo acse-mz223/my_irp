@@ -87,17 +87,44 @@ function ChartComponent(props){
                 stacked: true,
                 title: {
                     display: true,
-                    text: 'Senario'
-                  } 
+                    text: 'Scenario',
+                    font: {
+                        size: 20, // 图例文字大小
+                    },
+                  },
+                ticks:{
+                    font: {
+                        size: 18, // 图例文字大小
+                    },
+                } 
+
             },
             y: { 
                 stacked: true,
                 title: {
                     display: true,
-                    text: 'Storage capacity'
-                  } 
+                    text: 'Storage capacity (Gt)',
+                    font: {
+                        size: 18, // 图例文字大小
+                    },
+                  },
+                ticks:{
+                    font: {
+                        size: 18, // 图例文字大小
+                    },
+                }                  
             },
-        } 
+        },
+        plugins: {
+            legend: {  // 图例
+                labels: {
+                    color: 'black', // 图例文字颜色
+                    font: {
+                        size: 15, // 图例文字大小
+                    },
+                }
+            }
+        }, 
     }
 
     const style = {

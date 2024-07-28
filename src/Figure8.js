@@ -91,14 +91,22 @@ function getPopUpInfo(header, dataRow, storageIndex){
     const infoHeaders = ['Basin Name', 'Region', 'Attributing Countries', 'Majority Country', 'Location Latitude', 'Location Longitude', 'QGIS Poly Area (km^2)', 'Basin Size Label', 'Well Count']
     // get string 
     infoHeaders.forEach((infoHeader) =>{
-         infoString.push(<div className='popup-info'>{infoHeader}:{dataRow[header.indexOf(infoHeader)].value}</div>)
+        if (infoHeader === 'Basin Name')
+            infoString.push(<h3>{dataRow[header.indexOf(infoHeader)].value}</h3>)
+        else
+            infoString.push(<div className='popup-info'><strong>{infoHeader}:</strong>{dataRow[header.indexOf(infoHeader)].value}</div>)
     })
-    infoString.push(<div className='popup-info'>Storage Capacity: {dataRow[storageIndex].value}</div>)
+    infoString.push(<div className='popup-info'><strong>Storage Capacity:</strong> {dataRow[storageIndex].value}</div>)
     
     return infoString
 }
 
 function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
+    function circleClick(event){
+        console.log("circle click!!")
+        console.log("Circle pane:", event.target.getPane().className); 
+
+    }
     // generate <Circle>
     function CircleComponent(){
         const circles = []
@@ -128,6 +136,11 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
                             color= {dataRow[limitationIndex].value === "P"? "red" : "blue"}                          
                             fillColor={dataRow[limitationIndex].value === "P"? "red" : "blue"}                     
                             fillOpacity={0.5}  
+                            eventHandlers={
+                                {
+                                    click: circleClick
+                                }
+                            }
                         >   
                             <Popup>{popUpInfo}</Popup>
                         </Circle>
@@ -194,7 +207,7 @@ export function Figure8(props){ //props.data
 
     // basin button state
     const [basinLayerShow, setBasinLayerShow] = useState({
-        layer: false,
+        layer: true,
         type: "button"
     })
 

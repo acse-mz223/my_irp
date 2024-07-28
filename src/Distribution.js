@@ -73,6 +73,9 @@ export function KMLLayer(props) {
         console.log("KML Data:", kmlLayer.toGeoJSON());
         kmlLayer.on('ready', () => {
             kmlLayer.eachLayer((layer) => {
+                // 查看pane
+                console.log("pane:",layer.options.pane)
+                layer.bringToBack()
                 // 设置图层样式
                 let color;
                 if (layer.feature && layer.feature.properties){
@@ -97,6 +100,8 @@ export function KMLLayer(props) {
 
                 // 添加点击事件
                 layer.on('click', (e) => {
+                    // console
+                    console.log("layer click!!")
                     // 弹窗显示属性信息
                     if (layer.feature && layer.feature.properties) {
                         const layerProps = layer.feature.properties;

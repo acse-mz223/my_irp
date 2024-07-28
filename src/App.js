@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom"
 import * as XLSX from 'xlsx';
 import {MainPage} from './MainPage'
+import {About} from "./About.js"
 import {Data} from './Data';
 import {Figure6} from './Figure6';
 import {Figure7} from './Figure7';
@@ -41,6 +42,10 @@ export function App(){
     path: "/",
     element: <MainPage setMenuHidden={setMenuHidden} menuHidden={menuHidden}/>,
     children:[
+      {
+        path: "About",
+        element: <About menuHidden={menuHidden}/>
+      },
       {
       path: "Data",
       element: <Data data={data} menuHidden={menuHidden}/>

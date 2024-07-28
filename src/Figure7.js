@@ -86,22 +86,46 @@ function ChartComponentFigure7(props){
                 stacked: true,
                 title: {
                     display: true,
-                    text: 'Senario'
+                    text: 'Scenario',
+                    font:{
+                        size:20
+                    }
+                },
+                ticks:{
+                    font:{
+                        size:18
+                    }                    
                 }
             },
             y: { 
                 stacked: true,
                 title: {
                     display: true,
-                    text: 'Persentage of Storage resource'
+                    text: 'Persentage of Storage resource (%)',
+                    font:{
+                        size:20
+                    }
                   },
                 max: 1, // 最大刻度
                 min: 0,  // 最小刻度
                 ticks: {
                     stepSize: 0.2, // 刻度间隔
+                    font:{
+                        size:18
+                    }
                 }, 
             },
-        } 
+        },
+        plugins: {
+            legend: {  // 图例
+                labels: {
+                    color: 'black', // 图例文字颜色
+                    font: {
+                        size: 18, // 图例文字大小
+                    },
+                }
+            }
+        }, 
     }
 
     const style = {

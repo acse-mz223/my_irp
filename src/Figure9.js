@@ -95,19 +95,46 @@ function ChartComponentFigure9(props){
         scales: { 
             x: { 
                 stacked: false,
-                title: {
+                title: { // 标题
                     display: true,
-                    text: 'Senario'
+                    text: 'Scenario',
+                    font:{
+                        size:20
+                    }
+                },
+                ticks: {  //刻度标签
+                    font: {
+                        size: 18
+                    }
                 }
+
             },
             y: { 
                 stacked: false,
-                title: {
+                title: {  // 标题
                     display: true,
-                    text: 'Storage Capacity'
+                    text: 'Storage Capacity (Gt)',
+                    font:{
+                        size:20
+                    }        
                 },
+                ticks: {  //刻度标签
+                    font: {
+                        size: 18
+                    }
+                }
 
             }, 
+        },
+        plugins: {
+            legend: {  // 图例
+                labels: {
+                    color: 'black', // 图例文字颜色
+                    font: {
+                        size: 20, // 图例文字大小
+                    },
+                }
+            }
         },
     } 
 

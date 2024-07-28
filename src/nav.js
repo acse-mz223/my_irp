@@ -3,10 +3,20 @@ import "./nav.css"
 import { ReactComponent as EarthIcon } from './earth_icon.svg';
 import { ReactComponent as ImageIcon } from './image_icon.svg';
 import { ReactComponent as PinIcon } from './pin_alt_icon.svg';
+import { ReactComponent as HomeIcon } from './home_icon.svg';
+
 
 export function Nav(){
     return(
+        
         <div className="nav-box">
+            <div className="nav-div">
+                <div className="nav-div-title">General</div>
+                <NavLink to="About" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
+                    <HomeIcon className="nav-div-icon" />
+                    About
+                </NavLink>
+            </div>
             <div className="nav-div">
                 <div className="nav-div-title">Raw Data</div>
                 <NavLink to="Data" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
@@ -18,7 +28,7 @@ export function Nav(){
                     Data distribution map
                 </NavLink>
             </div>
-            <div className="nav-div">
+            {/* <div className="nav-div">
                 <div className="nav-div-title">Data Analysis - basin</div>
                 <div className='nav-div-figure'>
                     <ImageIcon className="nav-div-icon" />
@@ -28,7 +38,7 @@ export function Nav(){
                     <ImageIcon className="nav-div-icon" />
                     Figure 5
                 </div>
-            </div>
+            </div> */}
             <div className="nav-div nav-div-last">
                 <div className="nav-div-title">Data Analysis - World</div>
                 <NavLink to="Figure6" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
