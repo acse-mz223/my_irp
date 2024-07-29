@@ -43,7 +43,7 @@ export function App(){
     element: <MainPage setMenuHidden={setMenuHidden} menuHidden={menuHidden}/>,
     children:[
       {
-        path: "About",
+        path: "/",
         element: <About menuHidden={menuHidden}/>
       },
       {

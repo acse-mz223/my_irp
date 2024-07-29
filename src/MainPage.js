@@ -13,6 +13,7 @@ export function MainPage(props) {
       <Header setMenuHidden={props.setMenuHidden}/>
       <div className='main-body'>
           {props.menuHidden || <Nav />}
+          {props.menuHidden || <div className="fake-nav"/>}
           <Outlet/>
       </div>
     </div>

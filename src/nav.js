@@ -8,11 +8,10 @@ import { ReactComponent as HomeIcon } from './home_icon.svg';
 
 export function Nav(){
     return(
-        
         <div className="nav-box">
             <div className="nav-div">
                 <div className="nav-div-title">General</div>
-                <NavLink to="About" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
+                <NavLink to="/" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
                     <HomeIcon className="nav-div-icon" />
                     About
                 </NavLink>

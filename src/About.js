@@ -4,7 +4,7 @@ import { ReactComponent as CodeIcon } from "./code_icon.svg"
 
 export function About(props){
     return (
-        <div className={`subpage ${props.menuh1dden && "subpage-full"}`}>
+        <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
         <div className="subpage-title">About</div>
         <div className="about-box">
             <div className="box">
