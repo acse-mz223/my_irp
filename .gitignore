@@ -22,3 +22,45 @@
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 
+# 依赖项
+/backend/node_modules
+
+# 环境配置文件
+/backend/.env
+/backend/.env.local
+/backend/.env.development.local
+/backend/.env.test.local
+/backend/.env.production.local
+
+# 日志
+/backend/logs
+/backend/*.log
+/backend/npm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+
+# 运行时数据
+/backend/pids
+/backend/*.pid
+/backend/*.seed
+/backend/*.pid.lock
+
+# 目录锁文件
+/backend/.yarn-integrity
+/backend/.shrinkwrap
+
+# 构建产物
+/backend/dist
+
+# 临时文件
+/backend/tmp
+/backend/temp
+/backend/.cache
+
+# 其他
+.DS_Store
+*.swp
+*.lock
+*.swx
+
+
