@@ -15,6 +15,7 @@ function statistic(data){
     const dataRows = data.slice(1);
     // index 
     const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
+    senarios.push("M")
     const durations = ["30", "80"]
     const categories = ["uniform","history","developed"] // all + well count + main country (condition)
     // index
@@ -38,14 +39,14 @@ function statistic(data){
                 // judge wheather the sum value is valid
                 if (datarow[storageIndex] && datarow[storageIndex].value !== "NaN"){
                     // uniform
-                    dataStatistic[duration][senario]["uniform"] += datarow[storageIndex].value
+                    dataStatistic[duration][senario]["uniform"] += Number(datarow[storageIndex].value)
                     // history
                     if (datarow[historyIndex] && datarow[historyIndex].value >= 100)
-                        dataStatistic[duration][senario]["history"] += datarow[storageIndex].value
+                        dataStatistic[duration][senario]["history"] += Number(datarow[storageIndex].value)
                         
                     // developed
                     if (datarow[developedIndex] && developedCountry.includes(datarow[developedIndex].value))
-                        dataStatistic[duration][senario]["developed"] += datarow[storageIndex].value
+                        dataStatistic[duration][senario]["developed"] += Number(datarow[storageIndex].value)
                 }
             })
         })
@@ -140,7 +141,8 @@ function ChartComponentFigure9(props){
 
 
     const style = {
-        width: "40vw"
+        width: "40vw",
+        height: "85vh"
     }
 
     return <Bar className="data-map" style={style} data={chartData} options={option} />;

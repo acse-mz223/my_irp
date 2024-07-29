@@ -12,6 +12,7 @@ function OptionComponent(props){  //props.property => Majority Country / Senario
     if (props.property === "Senarios")
         {
             const senarios = Array.from({length:12}, (item,index)=>{return (index+1).toString()})
+            senarios.push("M")
             const select = senarios.map((item) =>{
                 return <option value={item}>{item}</option>
             })
@@ -102,11 +103,6 @@ function getPopUpInfo(header, dataRow, storageIndex){
 }
 
 function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
-    function circleClick(event){
-        console.log("circle click!!")
-        console.log("Circle pane:", event.target.getPane().className); 
-
-    }
     // generate <Circle>
     function CircleComponent(){
         const circles = []
@@ -136,11 +132,7 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
                             color= {dataRow[limitationIndex].value === "P"? "red" : "blue"}                          
                             fillColor={dataRow[limitationIndex].value === "P"? "red" : "blue"}                     
                             fillOpacity={0.5}  
-                            eventHandlers={
-                                {
-                                    click: circleClick
-                                }
-                            }
+
                         >   
                             <Popup>{popUpInfo}</Popup>
                         </Circle>
@@ -185,7 +177,9 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
         style={{ height: '100%', width: '100%'}}
       >
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+
+
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
         {props.basinLayerShow["type"] === "filter"? <SetCenter mapPara={props.mapPara} />:""}

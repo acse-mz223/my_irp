@@ -1,10 +1,10 @@
 import "./Figure6.css"
-import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useRef, useState } from 'react';
+import { Bar, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 // 注册需要使用的 Chart.js 组件
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 // statistic => dataStatistic[duration][senario][region]
 function statistic(data){
@@ -13,6 +13,7 @@ function statistic(data){
     const dataRows = data.slice(1);
     // index
     const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
+    senarios.push("M")
     const durations = ["30", "80"]
     const regionIndex = headers.indexOf("Region")
     // region statistic
@@ -37,7 +38,9 @@ function statistic(data){
             dataRows.forEach((datarow) =>{
                 if (datarow[regionIndex]){
                     if(datarow[storageIndex])
-                        if (datarow[storageIndex].value !== "NaN") dataStatistic[duration][senario][datarow[regionIndex].value] += datarow[storageIndex].value
+                        if (datarow[storageIndex].value !== "NaN") {
+                            dataStatistic[duration][senario][datarow[regionIndex].value] += Number(datarow[storageIndex].value)
+                        }
                 }
             })
         })
@@ -121,35 +124,142 @@ function ChartComponent(props){
                     color: 'black', // 图例文字颜色
                     font: {
                         size: 15, // 图例文字大小
-                    },
-                }
+                    }
+                },
+                // click event  
+                // onClick: (e, legendItem, legend) => { 
+                //     const index = legendItem.datasetIndex;  // get the index of dataset (which is also the index of states)
+                //     // change the state
+                //     props.setLegendStates((preValue) =>{
+                //         let preValueCopy = preValue
+                //         preValueCopy[index] = !preValueCopy[index]
+                //         return preValueCopy
+                //     })
+                // }
+
             }
         }, 
     }
 
     const style = {
-        width: "40vw"
+        width: "40vw",
+        height: "75vh"
     }
+
+    // // click event update map states
+    // chartData.datasets.forEach((dataset,index) => {
+    //     dataset.hidden = props.legendStates[index] === false;
+    // });
 
     return <Bar className="data-map" style={style} data={chartData} options={option} />;
 
 }
 
+// filter
+function Filter(props){
+    function optionArray(){
+        const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
+        senarios.push("M")
+        const optionArray = senarios.map((scenario) =>{
+            return <option value={scenario}>{scenario}</option>
+        })
+        return optionArray
+    }
+    return (
+        <div className="filter-input">
+            <div className="filter-input-name">Scenario:</div>
+            <select className="filter-input-selector" onChange={(event) =>{props.setFilterScenario(event.target.value)}}>
+                {optionArray()}
+            </select>
+        </div>
+    )
+}
+
+function preparePieData(props){
+    const labels = props.data.regions
+    const datasets = [{
+        data: labels.map((region) =>{
+            return props.data.dataStatistic[props.duration][props.filterScenario][region]
+        }) ,
+        backgroundColor: labels.map(getRandomColor),
+      }]
+
+    return {
+        labels: labels,
+        datasets: datasets
+    }
+}
+
+// pie
+function PieComponent(props){
+    // prepare date for chart
+    const chartData = preparePieData(props)
+    console.log("PiePreapareData:",chartData)
+    // return
+    const option = { 
+        responsive: true,  // 图表自动缩放
+        plugins: {
+        legend: {
+            position: 'top', // 图例位置
+            labels: {
+                color: 'black', // 图例文字颜色
+                font: {
+                    size: 15, // 图例文字大小
+                },
+            }
+        },
+        tooltip: {
+            mode: 'index',
+            intersect: false, // 鼠标悬停显示提示
+        }
+        },
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    }
+
+    const style = {
+        width: "30vw",
+        height: "50vh"
+    }
+
+    return <Pie className="data-map" style={style} data={chartData} options={option} />;
+}
+
 export function Figure6(props){
+    // filter state
+    const [filterScenario, setFilterScenario] = useState(1)
+    console.log(filterScenario)
+    // legend show states (to associate two legend)
+    const [legendStates, setLegendStates] = useState(new Array(9).fill(true))
+    console.log(legendStates)
     // judge
     if (!props.data.length) return <div></div>
     // statistic
     const statisticData = statistic(props.data)
+    console.log("statistic:",statisticData)
     // chart
     return(
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure6</div>
             <div className="data-map-box">
                 <div>
-                    <ChartComponent data={statisticData} duration='30' />
+                    <ChartComponent data={statisticData} duration='30' legendStates={legendStates} setLegendStates={setLegendStates}/>
                 </div>
                 <div>
-                    <ChartComponent data={statisticData} duration='80' />
+                    <ChartComponent data={statisticData} duration='80' legendStates={legendStates} setLegendStates={setLegendStates}/>
+                </div>
+            </div>
+            <div className="data-pie-box">
+                <Filter setFilterScenario={setFilterScenario} filterScenario={filterScenario} />
+                <div className="pies">
+                    <div>
+                        <PieComponent data={statisticData} duration='30' filterScenario={filterScenario}/>
+                    </div>
+                    <div>
+                        <PieComponent data={statisticData} duration='80' filterScenario={filterScenario}/>
+                    </div>
                 </div>
             </div>
         </div>

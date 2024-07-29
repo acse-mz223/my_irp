@@ -11,6 +11,7 @@ function statistic(data){  //each cell is stored as {value: cell}
     const dataRows = data.slice(1);
     // index
     const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
+    senarios.push("M")
     const durations = ["30", "80"]
     const limitations = ["P","T"]
     // 计算每个limit下，每个年份下，每个senario下的求和
@@ -45,7 +46,9 @@ function statistic(data){  //each cell is stored as {value: cell}
 }
 
 function prepareData(props){
+    // senarios array
     const labels = props.data.senarios
+    // datasets = 2 * dataset =  dataset in T + dataset in P
     const datasets = props.data.limitations.map((limitation) =>{
         return {
         label: limitation,
@@ -54,12 +57,20 @@ function prepareData(props){
       }
     })
 
+    // data
     labels.forEach(scenario => {
         datasets.forEach(dataset => {
+          // push in the data for differnet senarios in T and P
           dataset.data.push(props.data.dataStatistic[props.duration][scenario][dataset.label] || 0);
         });
       });
-
+    
+    // updata the name of dataset.label 
+    datasets.forEach((dataset) =>{
+        if (dataset.label === "T") dataset.label = "Limited by pressure"
+        if (dataset.label === "P") dataset.label = "Limited by number of injection sites"
+    })
+    
     return {
         labels: labels,
         datasets: datasets
@@ -129,7 +140,8 @@ function ChartComponentFigure7(props){
     }
 
     const style = {
-        width: "40vw"
+        width: "40vw",
+        height: "85vh"
     }
 
     return <Bar className="data-map" style={style} data={chartData} options={option} />;

@@ -261,7 +261,7 @@ function BasicInforBoard({basinInfor}){
 
 ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
 function CampacityInforBoard({basinInfor}){
-  const senarios = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  const senarios = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "M"]
   // data
   const data = {
     labels: senarios,
