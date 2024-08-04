@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Popup, Circle, useMap } from 'react-leaflet';
 import { countryLocationData } from './countryLocationData';
 import { KMLLayer, statistic } from "./Distribution"
 import L from 'leaflet';
+import { formatNumber } from "./utility"
 
 
 
@@ -97,7 +98,7 @@ function getPopUpInfo(header, dataRow, storageIndex){
         else
             infoString.push(<div className='popup-info'><strong>{infoHeader}:</strong>{dataRow[header.indexOf(infoHeader)].value}</div>)
     })
-    infoString.push(<div className='popup-info'><strong>Storage Capacity:</strong> {dataRow[storageIndex].value}</div>)
+    infoString.push(<div className='popup-info'><strong>Storage Capacity:</strong> {formatNumber(dataRow[storageIndex].value)}</div>)
     
     return infoString
 }
@@ -176,12 +177,11 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
         maxBoundsViscosity={1.0}
         style={{ height: '100%', width: '100%'}}
       >
-            <TileLayer
-                url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    />
 
-
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
         {props.basinLayerShow["type"] === "filter"? <SetCenter mapPara={props.mapPara} />:""}
         {props.basinLayerShow["layer"] && <KMLLayer  dataBasinName={props.dataBasinName} />}
         {CircleComponent()} 
@@ -226,6 +226,9 @@ export function Figure8(props){ //props.data
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure8</div>
+            <div className="subpage-intro">
+                To more clearly display the geographic locations of different basins on the map and their relationship between storage capacity and location, marks are plotted on the map. Red marks represent basins where the limiting factor is pressure, and blue marks represent basins limited by the number of injection sites. The radius of the mark is proportionate to the current storage capacity of the basin.
+                <br/>Through the selection box in the upper right corner, the storage capacity under 13 scenarios after 30 or 80 years can be displayed. To facilitate analysis for different countries, a country option has been added. The "basin layer" button in the lower right corner can be toggled to display basins, making it easier for users to distinguish them.</div>
             <div className="figure8-div">
                 <OptionComponents data={props.data} setMapParaFun={setMapParaFun} mapPara={mapPara} setBasinLayerShow={setBasinLayerShow}/>
                 <DistributionMapButton setBasinLayerShow={setBasinLayerShow} />

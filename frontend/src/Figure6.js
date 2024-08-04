@@ -2,6 +2,7 @@ import "./Figure6.css"
 import React, { useRef, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { formatNumber } from "./utility";
 
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -60,7 +61,7 @@ function prepareData(props){
 
     labels.forEach(scenario => {
         datasets.forEach(dataset => {
-          dataset.data.push(props.data.dataStatistic[props.duration][scenario][dataset.label] || 0);
+          dataset.data.push(formatNumber(props.data.dataStatistic[props.duration][scenario][dataset.label]) || 0);
         });
       });
 
@@ -179,7 +180,7 @@ function preparePieData(props){
     const labels = props.data.regions
     const datasets = [{
         data: labels.map((region) =>{
-            return props.data.dataStatistic[props.duration][props.filterScenario][region]
+            return formatNumber(props.data.dataStatistic[props.duration][props.filterScenario][region])
         }) ,
         backgroundColor: labels.map(getRandomColor),
       }]
@@ -243,6 +244,7 @@ export function Figure6(props){
     return(
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure6</div>
+            <div className="subpage-intro">Analyzing the contribution of different regions to CCS resources plays a crucial role from a global perspective. The figure below uses stacked bar charts to depict the storage capacity of different regions after 30 and 80 years under 12 scenarios and the M scenario. <br/>Clicking on the legend allows for the specific region to be toggled off.</div>
             <div className="data-map-box">
                 <div>
                     <ChartComponent data={statisticData} duration='30' legendStates={legendStates} setLegendStates={setLegendStates}/>
@@ -251,6 +253,8 @@ export function Figure6(props){
                     <ChartComponent data={statisticData} duration='80' legendStates={legendStates} setLegendStates={setLegendStates}/>
                 </div>
             </div>
+            <img src="divider_icon.png" className="divider"/>
+            <div className="subpage-intro">Analyzing the contribution of different regions to CCS resources is crucial from a global perspective. To more clearly compare which regions contribute the most and the least to capacity in each scenario, pie charts for different scenarios after 30 and 80 years are drawn below. A selection box allows for choosing a specific scenario to generate the pie charts. Clicking on the legend enables the display of specific regions to be toggled off.</div>
             <div className="data-pie-box">
                 <Filter setFilterScenario={setFilterScenario} filterScenario={filterScenario} />
                 <div className="pies">

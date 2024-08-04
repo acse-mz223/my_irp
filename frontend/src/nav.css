@@ -2,14 +2,22 @@
     background-color: rgb(253, 253, 253);
     padding: 20px;
     border: none;
-    box-shadow: 1px 1px 10px grgb(205, 205, 205);
+    box-shadow: 3px 10px 15px rgb(226, 226, 226);
     display:flex;
     width: 12%;
     height: 100%;
     flex-direction: column;
     position: fixed;
     z-index: 9000;
+    transition: transform 0.2s ease-in-out; 
+}
 
+.nav-box.open {
+    transform: translateX(0); 
+}
+
+.nav-box.closed {
+    transform: translateX(-14vw); 
 }
 
 .nav-div{

@@ -7,6 +7,7 @@ import omnivore from 'leaflet-omnivore';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { ReactComponent as DeleteButton } from './delete_icon.svg';
+import { formatNumber } from "./utility"
 
 
 // process data to GeoJSON data (GeometryCollection to FeatureCollection)
@@ -269,7 +270,7 @@ function CampacityInforBoard({basinInfor}){
       {
         label: 'Duration = 30',
         data: senarios.map((senario) =>{
-            return basinInfor[senario+"_30"]
+            return formatNumber(basinInfor[senario+"_30"])
         }), 
         borderColor: '#3e95cd',
         backgroundColor: '#7bb6dd',
@@ -279,7 +280,7 @@ function CampacityInforBoard({basinInfor}){
       {
         label: 'Duration = 80',
         data: senarios.map((senario) =>{
-            return basinInfor[senario+"_80"]
+            return formatNumber(basinInfor[senario+"_80"])
         }), 
         borderColor: '#8e5ea2',
         backgroundColor: '#c78ecf',
@@ -403,6 +404,7 @@ export function Distribution(props){
             const oneBoard = (
                 <div className='one-board' key={basinName.replace(/\s+/g, '')}>
                     <DeleteButton className="delete-button" onClick={() =>{deleteOneBoard(basinName.replace(/\s+/g, ''))}}/>
+                    <div className="one-board-title">{basinName}</div>
                     <BasicInforBoard basinInfor={basinInfor}/>
                     <CampacityInforBoard basinInfor={basinInfor}/>
                 </div>
@@ -421,6 +423,7 @@ export function Distribution(props){
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}` }>
             <div className="subpage-title">Data distribution map</div>
+            <div className="subpage-intro"> One of the factors influencing CCS deployment is governmental support and the readiness of countries for deployment. The Global CCS Institute categorizes countries using the Storage Readiness Index. A high index rating reflects progressive policies or legal support for CCS projects and a reliance on fossil fuels. The storage readiness index identifies Canada, the USA, Norway, the UK, and Australia as the countries best prepared for advancing CCS deployment (Band A countries). Additionally, five countries (The Netherlands, China, Denmark, Germany, and Japan) are considered Band B countries. In the diagram, the basins in these countries are marked in green. Furthermore, any basin with more than 100 hydrocarbon wells is defined as regions with historic hydrocarbon exploration, which are marked in blue in the diagram. Basins that meet both criteria are marked in red, otherwise they are marked in gray.<br/>Double-clicking on a basin will provide detailed data about that basin.</div>
             <div className='distribution'>
                 <MapContainer center={[51.5074, -0.127758]} 
                 ref={myMapRef}

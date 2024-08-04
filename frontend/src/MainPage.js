@@ -12,7 +12,7 @@ export function MainPage(props) {
     <div>
       <Header setMenuHidden={props.setMenuHidden}/>
       <div className='main-body'>
-          {props.menuHidden || <Nav />}
+          <Nav menuHidden={props.menuHidden}/>
           {props.menuHidden || <div className="fake-nav"/>}
           <Outlet/>
       </div>

@@ -1,5 +1,5 @@
 .distribution{
-    width: 100%;
+    width: 95%;
     height: 85vh;
     background-color: aquamarine;
     margin: 10px 10px;
@@ -63,7 +63,6 @@
 }
 
 .board{
-    background-color: rgb(174, 215, 250);
     margin-top: 30px;
     padding: 10px;
     display: grid;
@@ -76,7 +75,7 @@
 
 .one-board{
     position: relative;
-    background-color: aquamarine;
+    background-color: rgb(245, 245, 245);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 3px 10px rgb(192, 192, 192);
@@ -100,6 +99,13 @@
 
 .delete-button:hover{
     background-color: rgb(230, 230, 230);
+}
+
+.one-board-title{
+    font-size: 30px;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .basic-infor-board {

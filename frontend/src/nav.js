@@ -6,9 +6,9 @@ import { ReactComponent as PinIcon } from './pin_alt_icon.svg';
 import { ReactComponent as HomeIcon } from './home_icon.svg';
 
 
-export function Nav(){
+export function Nav(props){
     return(
-        <div className="nav-box">
+        <div className={`nav-box ${props.menuHidden? 'closed' : 'open'}`}>
             <div className="nav-div">
                 <div className="nav-div-title">General</div>
                 <NavLink to="/" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>

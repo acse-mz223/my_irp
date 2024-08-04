@@ -1,6 +1,7 @@
 import "./Figure9.css"
 import { Bar } from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { formatNumber } from "./utility"
 
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -68,7 +69,7 @@ function prepareData(props){
 
     labels.forEach(scenario => {
         datasets.forEach(dataset => {
-          dataset.data.push(props.data.dataStatistic[props.duration][scenario][dataset.label] || 0);
+          dataset.data.push(formatNumber(props.data.dataStatistic[props.duration][scenario][dataset.label]) || 0);
         });
       });
 
@@ -158,6 +159,11 @@ export function Figure9(props){    // props => data
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure9</div>
+            <div className="subpage-intro">
+                To explore the impact of governmental support and the readiness of countries for deployment on CCS, the bar chart below illustrates 13 scenarios. 
+                <br/>In regions without a history of hydrocarbon exploration, the uncertainty of the subsurface geology is greater. This can lead to bottlenecks when developing new CCS projects. To illustrate this, CCS is only deployed in basins with more than 100 hydrocarbon wells. The figure below shows that limiting deployment to these basins does not significantly impact our storage resource estimates. On average, excluding basins without hydrocarbon experience, our storage resource estimate decreases by 17%.
+                <br/>Another factor hindering CCS deployment is governmental support and the readiness of countries for deployment. The figure below demonstrates that the readiness of countries is the most limiting factor in our storage resource estimates.
+            </div>
             <div className="data-map-box">
                 <div>
                     <ChartComponentFigure9 data={statisticData} duration='30' />
