@@ -369,10 +369,25 @@ export function Distribution(props){
         console.log("dataBasinName:", dataBasinName)
     }
 
+    // local board info get
+    const localInfo = JSON.parse(localStorage.getItem("distributionBoardInfo")) || []
+    const boardInit = localInfo.map((info) =>{
+        return (
+            <div className='one-board' key={info.basinName.replace(/\s+/g, '')}>
+                <DeleteButton className="delete-button" onClick={() =>{deleteOneBoard(info.basinName.replace(/\s+/g, ''))}}/>
+                <div className="one-board-title">{info.basinName}</div>
+                <BasicInforBoard basinInfor={info.basinInfor}/>
+                <CampacityInforBoard basinInfor={info.basinInfor}/>
+            </div>
+        ) 
+    })
+
     // add infor the board
-    const [board, setBoard] = useState([])
+    const [board, setBoard] = useState(boardInit)
     const boardlist = []
     function deleteOneBoard(key){
+        // get localstorage
+        const localStorageDel = JSON.parse(localStorage.getItem("distributionBoardInfo"))
         // update boardlist
         const index = boardlist.indexOf(key)
         boardlist.splice(index,1)
@@ -382,10 +397,18 @@ export function Distribution(props){
                 if (item.key !== key) return true
             })
         })
+        // update localstorage
+        localStorage.setItem("distributionBoardInfo",JSON.stringify(localStorageDel.filter((item) =>{
+            if (item.key !== key) return true
+        })))
+
+
 
     }
 
     function popupMoreFunc(basinName){
+        // update localstorage
+        const localStorageAdd = JSON.parse(localStorage.getItem("distributionBoardInfo")) || []
         // check weather this basin is in board or not
         let Inboard = false
         boardlist.forEach((item) =>{
@@ -416,7 +439,18 @@ export function Distribution(props){
                     oneBoard
                 ]
             })
+            // update localstorage
+            localStorageAdd.push({
+                key: basinName.replace(/\s+/g, ''),
+                basinName,
+                basinInfor
+            })
         }
+        console.log("ad:", localStorageAdd)
+        // update localstorage
+        localStorage.setItem("distributionBoardInfo", JSON.stringify(localStorageAdd))
+
+
     }
     
     if (!props.data.length) return <div></div>
