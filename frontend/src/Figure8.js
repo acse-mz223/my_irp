@@ -33,6 +33,7 @@ function OptionComponent(props){  //props.property => Majority Country / Senario
             if (item[majorityCountryIndex]) majorityCountrySet.add(item[majorityCountryIndex].value)
         })
         const majorityCountry = Array.from(majorityCountrySet)
+        majorityCountry.sort()
         // rerturn 
         const select = majorityCountry.map((item) =>{
             return <option value={item}>{item}</option>
