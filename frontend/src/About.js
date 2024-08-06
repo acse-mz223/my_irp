@@ -1,8 +1,16 @@
 import "./About.css"
 import { ReactComponent as PaperIcon } from "./paper_icon.svg"
 import { ReactComponent as CodeIcon } from "./code_icon.svg"
+import { useRef } from "react"
 
 export function About(props){
+    // scroll to second block
+    const scrollTarget = useRef(null);
+    function rollToSecondBlock(){
+        scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+
+
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">About</div>
@@ -14,9 +22,9 @@ export function About(props){
                             I particularly resonate with the company's core values of "High Goals" and "Support." While exploring your website, I noticed these values align closely with my own work ethic. I believe that a relaxed and supportive cultural atmosphere is crucial in a vibrant and evolving company. Such an environment not only allows employees to pursue the careers they love with the support of the company but also encourages them to set higher goals. By doing so, employees can enhance their professional capabilities and contribute more to the company's ongoing development.
                         </p>
                     </div>
-                    <img src="./arrow_icon.png" className="main-block-arrow"/>
+                    <img src="./arrow_icon.png" className="main-block-arrow" onClick={rollToSecondBlock}/>
                 </div>
-                <div className="second-block">
+                <div className="second-block" ref={scrollTarget}>
                     <img className="second-block-image" src="./paper-chart.png" />
                     <div className="second-block-text">
                         <div className="main-block-title">title</div>
