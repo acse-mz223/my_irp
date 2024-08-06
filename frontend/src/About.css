@@ -7,7 +7,7 @@
 }
 
 .main-block{
-    height: 77vh;
+    height: 80vh;
     width: 100%;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.075) 20%, rgba(148, 185, 198, 0.555) 50%,rgb(148, 185, 198) 95%), 
                         url("../public/main-background.png");
@@ -16,6 +16,27 @@
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
     margin-bottom: 10vh;
+}
+
+@keyframes bounce{
+    0%, 100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-20px);
+    }
+}
+
+.main-block-arrow{
+    position: absolute;
+    bottom: 30px;
+    left: 45%;
+    width: 120px;
+    height: 80px;
+    animation: bounce 1.5s ease-in-out 0s infinite both;
+    cursor: pointer;
+    border-radius: 40px;
+
 }
 
 .main-block-text{
@@ -116,6 +137,7 @@
     flex-direction: row;
     background-color: antiquewhite;
     margin-top: 10vh;
+    margin-bottom: 10vh;
 }
 
 .third-block-image{

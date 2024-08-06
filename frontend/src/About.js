@@ -14,6 +14,7 @@ export function About(props){
                             I particularly resonate with the company's core values of "High Goals" and "Support." While exploring your website, I noticed these values align closely with my own work ethic. I believe that a relaxed and supportive cultural atmosphere is crucial in a vibrant and evolving company. Such an environment not only allows employees to pursue the careers they love with the support of the company but also encourages them to set higher goals. By doing so, employees can enhance their professional capabilities and contribute more to the company's ongoing development.
                         </p>
                     </div>
+                    <img src="./arrow_icon.png" className="main-block-arrow"/>
                 </div>
                 <div className="second-block">
                     <img className="second-block-image" src="./paper-chart.png" />
