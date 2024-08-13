@@ -9,13 +9,31 @@
 .main-block{
     height: 80vh;
     width: 100%;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.075) 20%, rgba(148, 185, 198, 0.555) 50%,rgb(148, 185, 198) 95%), 
-                        url("../public/main-background.png");
+    background-color: antiquewhite;
     background-size: cover;
     position: relative;
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
     margin-bottom: 10vh;
+    overflow: hidden;
+}
+
+.main-block-background{
+    position: absolute;
+    width: 120%;
+    height: 110%;
+    object-fit: cover;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px; 
+}
+
+.main-block-filter{
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.075) 20%, rgba(148, 185, 198, 0.555) 50%,rgb(148, 185, 198) 95%);
+    position: absolute;
+    inset: 0;
+    background-size: contain;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px; 
 }
 
 @keyframes bounce{
