@@ -45,7 +45,7 @@ export const VirtualizedSpreadsheet = ({ data }) => {
       rowCount={rowCount}
       rowHeight={80} // 根据实际内容调整行高
       height={1500} // 可视区域高度，根据需要调整
-      width={2000} // 可视区域宽度，根据需要调整
+      width={4000} // 可视区域宽度，根据需要调整
       itemData={data} // 传递数据到格子组件
     >
       {Cell}
