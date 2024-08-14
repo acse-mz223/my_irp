@@ -1,5 +1,6 @@
 import "./header.css"
 import { ReactComponent as MeunIcon } from './menu_icon.svg';
+import gsap from 'gsap';
 
 export function Header(props){
     return(
@@ -7,6 +8,7 @@ export function Header(props){
           <div className='header-icon-div'>
             <MeunIcon className='header-menu' onClick={
               () =>{
+                // change state
                 props.setMenuHidden((preValue) =>{
                   return !preValue
                 })

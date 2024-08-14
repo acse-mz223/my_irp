@@ -61,13 +61,13 @@ export function About(props){
         },{
             scrollTrigger:{
                 trigger: ref.current,
-                markers: true,
                 scrub: true,
                 start: 'top bottom',
-                end: 'bottom 90%'
+                end: 'bottom 70%'
             },
             xPercent: 0,
-            opacity: 1
+            opacity: 1,
+            ease: "power4.out"
         })
     }
 
@@ -78,13 +78,13 @@ export function About(props){
         },{
             scrollTrigger:{
                 trigger: ref.current,
-                markers: true,
                 scrub: true,
                 start: 'top bottom',
-                end: 'bottom 90%'
+                end: 'bottom 70%'
             },
             xPercent: 0,
-            opacity: 1
+            opacity: 1,
+            ease: "power4.out"
         })
     }
 
