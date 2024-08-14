@@ -2,6 +2,7 @@ import "./Figure9.css"
 import { Bar } from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { formatNumber } from "./utility"
+import { colors } from "./color";
 
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -59,11 +60,11 @@ function statistic(data){
 
 function prepareData(props){
     const labels = props.data.senarios
-    const datasets = props.data.categories.map((category) =>{
+    const datasets = props.data.categories.map((category, index) =>{
         return {
         label: category,
         data: [],
-        backgroundColor: getRandomColor(),
+        backgroundColor: colors[String(index * 2)],
       }
     })
 
@@ -78,13 +79,6 @@ function prepareData(props){
         datasets: datasets
     }
 }
-
-function getRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgba(${r}, ${g}, ${b}, 0.7)`;
-  }
 
 // chart component
 function ChartComponentFigure9(props){

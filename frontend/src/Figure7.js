@@ -2,6 +2,7 @@ import "./Figure7.css"
 import { Bar } from "react-chartjs-2"
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { formatNumber } from "./utility"
+import { colors } from "./color";
 
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -50,11 +51,11 @@ function prepareData(props){
     // senarios array
     const labels = props.data.senarios
     // datasets = 2 * dataset =  dataset in T + dataset in P
-    const datasets = props.data.limitations.map((limitation) =>{
+    const datasets = props.data.limitations.map((limitation, index) =>{
         return {
         label: limitation,
         data: [],
-        backgroundColor: getRandomColor(),
+        backgroundColor: colors[String(index * 8)],
       }
     })
 
@@ -77,13 +78,6 @@ function prepareData(props){
         datasets: datasets
     }
 }
-
-function getRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgba(${r}, ${g}, ${b}, 0.7)`;
-  }
 
 // chart component
 function ChartComponentFigure7(props){

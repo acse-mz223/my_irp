@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { formatNumber } from "./utility";
+import {colors} from "./color.js"
 
 // 注册需要使用的 Chart.js 组件
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -51,11 +52,11 @@ function statistic(data){
 
 function prepareData(props){
     const labels = props.data.senarios
-    const datasets = props.data.regions.map((region) =>{
+    const datasets = props.data.regions.map((region,index) =>{
         return {
         label: region,
         data: [],
-        backgroundColor: getRandomColor(),
+        backgroundColor: colors[String(index)],
       }
     })
 
@@ -70,13 +71,6 @@ function prepareData(props){
         datasets: datasets
     }
 }
-
-function getRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgba(${r}, ${g}, ${b}, 0.7)`;
-  }
 
 // chart component
 function ChartComponent(props){
@@ -182,7 +176,9 @@ function preparePieData(props){
         data: labels.map((region) =>{
             return formatNumber(props.data.dataStatistic[props.duration][props.filterScenario][region])
         }) ,
-        backgroundColor: labels.map(getRandomColor),
+        backgroundColor: labels.map((region, index) => {
+            return colors[String(index)]
+        }),
       }]
 
     return {
