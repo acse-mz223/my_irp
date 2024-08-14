@@ -31,10 +31,9 @@
 .data-box{
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgb(255, 181, 181);
     overflow: scroll;
     width: 95%;
-    height: 82vh;
+    height: 80vh;
     position: relative;
 }
 
