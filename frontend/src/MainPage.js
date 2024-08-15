@@ -10,7 +10,7 @@ export function MainPage(props) {
   
   return (
     <div>
-      <Header setMenuHidden={props.setMenuHidden}/>
+      <Header setMenuHidden={props.setMenuHidden} menuHidden={props.menuHidden}/>
       <div className='main-body'>
           <Nav menuHidden={props.menuHidden}/>
           {props.menuHidden || <div className="fake-nav"/>}
