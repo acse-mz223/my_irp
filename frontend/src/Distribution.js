@@ -161,7 +161,6 @@ export function KMLLayer(props) {
 function MapLegend(props){
     console.log("myMapRef:",props.myMapRef)
     function onHoverLabel(type,dataBasinName,myMapRef){
-        
         myMapRef.current.eachLayer((layer) =>{
             if (layer.feature && layer.feature.properties){
                 // set color

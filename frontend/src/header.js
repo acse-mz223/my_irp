@@ -21,7 +21,7 @@ export function Header(props){
             <img className='header-icon' src="./logo.jpg" />
           </div>
           <div className='header-title'>CO2 Block  Preload Analysis System </div>
-          <button className='header-signin-button'>Sign in</button>
+          <div className='header-signin-button'></div>
         </header>
 
     )
