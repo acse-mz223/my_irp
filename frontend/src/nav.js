@@ -39,7 +39,7 @@ export function Nav(props){
                 </div>
             </div> */}
             <div className="nav-div nav-div-last">
-                <div className="nav-div-title">Data Analysis - World</div>
+                <div className="nav-div-title">Data Analysis</div>
                 <NavLink to="Figure6" className={({ isActive }) => isActive ? "nav-div-figure nav-div-figure-active" : "nav-div-figure"}>
                     <ImageIcon className="nav-div-icon" />
                     Figure 6
