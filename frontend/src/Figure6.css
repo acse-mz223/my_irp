@@ -32,6 +32,11 @@
     width: 100%;
 }
 
+.die-pie-filter-box h2{
+    margin-bottom: 0;
+    margin-top: 30px;
+}
+
 .pies{
     margin-top: 30px;
     width: 100%;

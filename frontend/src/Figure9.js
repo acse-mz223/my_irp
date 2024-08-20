@@ -19,7 +19,7 @@ function statistic(data){
     const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
     senarios.push("M")
     const durations = ["30", "80"]
-    const categories = ["uniform","history","developed"] // all + well count + main country (condition)
+    const categories = ["all","history","developed"] // all + well count + main country (condition)
     // index
     const historyIndex = headers.indexOf("Well Count")
     const developedIndex = headers.indexOf("Majority Country")
@@ -40,8 +40,8 @@ function statistic(data){
             dataRows.forEach((datarow) =>{
                 // judge wheather the sum value is valid
                 if (datarow[storageIndex] && datarow[storageIndex].value !== "NaN"){
-                    // uniform
-                    dataStatistic[duration][senario]["uniform"] += Number(datarow[storageIndex].value)
+                    // all
+                    dataStatistic[duration][senario]["all"] += Number(datarow[storageIndex].value)
                     // history
                     if (datarow[historyIndex] && datarow[historyIndex].value >= 100)
                         dataStatistic[duration][senario]["history"] += Number(datarow[storageIndex].value)
