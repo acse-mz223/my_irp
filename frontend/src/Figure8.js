@@ -130,19 +130,33 @@ function Map(props) {  // <Map data={props.data} mapPara={mapPara}/>
                     circles.push(
                         <Circle 
                             center={[Number(dataRow[locationLatitudeIndex].value),Number(dataRow[locationLongitudeIndex].value)]} 
-                            radius={Number(dataRow[storageIndex].value)*10000} // unit: meter
+                            radius={Number(dataRow[storageIndex].value)*10000 * Math.cos(Number(dataRow[locationLatitudeIndex].value) * Math.PI / 180)} // unit: meter
                             color= {dataRow[limitationIndex].value === "P"? "red" : "blue"}                          
                             fillColor={dataRow[limitationIndex].value === "P"? "red" : "blue"}                     
                             fillOpacity={0.5}  
 
                         >   
-                            <Popup>{popUpInfo}</Popup>
+                            {/* <Popup>{popUpInfo}</Popup> */}
+                            <Popup>{Number(dataRow[storageIndex].value)}</Popup>
                         </Circle>
                     )
                 }
             
         })
-        console.log(circles)
+        // // test
+        // const ruler= [1,2,3,4,5,6,7]
+        // ruler.forEach((item) =>{circles.push(
+        //     <Circle 
+        //         center={[-13.2035,27]} 
+        //         radius={item*100000} // unit: meter
+        //         color= {"yellow"}                          
+        //         fillColor={"yellow"}                     
+        //     >   
+        //         {/* <Popup>{popUpInfo}</Popup> */}
+        //         <Popup>{item}</Popup>
+        //     </Circle>
+        // )})
+        // console.log(circles)
         return circles
     }
 
