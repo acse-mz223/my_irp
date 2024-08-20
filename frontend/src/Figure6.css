@@ -24,6 +24,14 @@
     align-items: center;
 }
 
+.die-pie-filter-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
 .pies{
     margin-top: 30px;
     width: 100%;

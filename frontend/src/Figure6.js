@@ -18,23 +18,43 @@ function statistic(data){
     senarios.push("M")
     const durations = ["30", "80"]
     const regionIndex = headers.indexOf("Region")
+    const countryIndex = headers.indexOf("Majority Country")
     // region statistic
     const regionSet = new Set();
     dataRows.forEach((item) =>{
         if (item[regionIndex]) regionSet.add(item[regionIndex].value)
     })
     const regions = Array.from(regionSet);
+    // country statistic
+    const country = {}
+    dataRows.forEach((item) => {
+        if (item[countryIndex] && item[regionIndex] && item[regionIndex].value && item[countryIndex].value)
+        {
+            if (country[item[regionIndex].value]) {
+            if (!country[item[regionIndex].value].includes(item[countryIndex].value)) {
+                country[item[regionIndex].value].push(item[countryIndex].value);
+            }
+            } 
+            else {
+            country[item[regionIndex].value] = [item[countryIndex].value];
+            }
+        }
+      })
     // 计算每个region下，每个年份下，每个senario下的求和
     const dataStatistic = {};
+    const dataStatisticCountry = {};
     durations.forEach((duration) =>{
         dataStatistic[duration]={}
+        dataStatisticCountry[duration]={}
         senarios.forEach((senario) =>{
             dataStatistic[duration][senario] = {}
+            dataStatisticCountry[duration][senario] = {}
             // get index 
             const storageIndex = headers.indexOf(senario + '_' + duration);
             // inital
             regions.forEach((region) =>{
                 dataStatistic[duration][senario][region] = 0
+                dataStatisticCountry[duration][senario][region]={}
             })
             // update
             dataRows.forEach((datarow) =>{
@@ -42,12 +62,19 @@ function statistic(data){
                     if(datarow[storageIndex])
                         if (datarow[storageIndex].value !== "NaN") {
                             dataStatistic[duration][senario][datarow[regionIndex].value] += Number(datarow[storageIndex].value)
+                            // country
+                            if (dataStatisticCountry[duration][senario][datarow[regionIndex].value][datarow[countryIndex].value])
+                                dataStatisticCountry[duration][senario][datarow[regionIndex].value][datarow[countryIndex].value] += Number(datarow[storageIndex].value)
+                            else
+                            dataStatisticCountry[duration][senario][datarow[regionIndex].value][datarow[countryIndex].value] = Number(datarow[storageIndex].value)
                         }
                 }
             })
         })
     })
-    return {dataStatistic, senarios, regions}
+    // console.log("dataStatisticCountry",dataStatisticCountry)
+    // console.log("Country:",country)
+    return {dataStatistic, dataStatisticCountry, senarios, regions, country}
 }
 
 function prepareData(props){
@@ -151,7 +178,7 @@ function ChartComponent(props){
 }
 
 // filter
-function Filter(props){
+function FilterScenario(props){
     function optionArray(){
         const senarios = Array.from({length:12},(item,index)=>{ return (index + 1).toString()})
         senarios.push("M")
@@ -170,7 +197,25 @@ function Filter(props){
     )
 }
 
-function preparePieData(props){
+// filter
+function FilterRegion(props){
+    function optionArray(){
+        const optionArray = props.regions.map((scenario) =>{
+            return <option value={scenario}>{scenario}</option>
+        })
+        return optionArray
+    }
+    return (
+        <div className="filter-input">
+            <div className="filter-input-name">Regions:</div>
+            <select className="filter-input-selector" onChange={(event) =>{props.setFilterRegion(event.target.value)}}>
+                {optionArray()}
+            </select>
+        </div>
+    )
+}
+
+function preparePieDataSenario(props){
     const labels = props.data.regions
     const datasets = [{
         data: labels.map((region) =>{
@@ -187,10 +232,31 @@ function preparePieData(props){
     }
 }
 
+function preparePieDataCountry(props){
+    const labels = props.data.country[props.filterRegion]
+    const datasets = [{
+        data: labels.map((country) =>{
+            return formatNumber(props.data.dataStatisticCountry[props.duration][props.filterScenario][props.filterRegion][country])
+        }) ,
+        backgroundColor: labels.map((country, index) => {
+            return colors[String(index)]
+        }),
+      }]
+
+    return {
+        labels: labels,
+        datasets: datasets
+    }
+}
+
 // pie
 function PieComponent(props){
     // prepare date for chart
-    const chartData = preparePieData(props)
+    let chartData = null
+    if (props.type === "scenario")
+        chartData = preparePieDataSenario(props)
+    else 
+        chartData = preparePieDataCountry(props)
     console.log("PiePreapareData:",chartData)
     // return
     const option = { 
@@ -227,6 +293,8 @@ function PieComponent(props){
 export function Figure6(props){
     // filter state
     const [filterScenario, setFilterScenario] = useState(1)
+    const [filterRegion30, setFilterRegion30] = useState("Asia")
+    const [filterRegion80, setFilterRegion80] = useState("Asia")
     console.log(filterScenario)
     // legend show states (to associate two legend)
     const [legendStates, setLegendStates] = useState(new Array(9).fill(true))
@@ -252,13 +320,27 @@ export function Figure6(props){
             <img src="divider_icon.png" className="divider"/>
             <div className="subpage-intro">Analyzing the contribution of different regions to CCS resources is crucial from a global perspective. To more clearly compare which regions contribute the most and the least to capacity in each scenario, pie charts for different scenarios after 30 and 80 years are drawn below. A selection box allows for choosing a specific scenario to generate the pie charts. Clicking on the legend enables the display of specific regions to be toggled off.</div>
             <div className="data-pie-box">
-                <Filter setFilterScenario={setFilterScenario} filterScenario={filterScenario} />
+                <FilterScenario setFilterScenario={setFilterScenario} filterScenario={filterScenario} />
                 <div className="pies">
                     <div>
-                        <PieComponent data={statisticData} duration='30' filterScenario={filterScenario}/>
+                        <PieComponent type={"scenario"} data={statisticData} duration='30' filterScenario={filterScenario}/>
                     </div>
                     <div>
-                        <PieComponent data={statisticData} duration='80' filterScenario={filterScenario}/>
+                        <PieComponent type={"scenario"} data={statisticData} duration='80' filterScenario={filterScenario}/>
+                    </div>
+                </div>
+            </div>
+            <div className="data-pie-box">
+                <div className="die-pie-filter-box">
+                    <FilterRegion setFilterRegion={setFilterRegion30} filterRegion={filterRegion30} regions={statisticData.regions}/>
+                    <FilterRegion setFilterRegion={setFilterRegion80} filterRegion={filterRegion80} regions={statisticData.regions} />
+                </div>
+                <div className="pies">
+                    <div>
+                        <PieComponent type={"region"} data={statisticData} duration='30' filterScenario={filterScenario} filterRegion={filterRegion30}/>
+                    </div>
+                    <div>
+                        <PieComponent type={"region"} data={statisticData} duration='80' filterScenario={filterScenario} filterRegion={filterRegion80}/>
                     </div>
                 </div>
             </div>
