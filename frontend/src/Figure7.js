@@ -69,8 +69,8 @@ function prepareData(props){
     
     // updata the name of dataset.label 
     datasets.forEach((dataset) =>{
-        if (dataset.label === "T") dataset.label = "Limited by pressure"
-        if (dataset.label === "P") dataset.label = "Limited by number of injection sites"
+        if (dataset.label === "T") dataset.label = "Limited by number of injection sites"
+        if (dataset.label === "P") dataset.label = "Limited by pressure"
     })
     
     return {
