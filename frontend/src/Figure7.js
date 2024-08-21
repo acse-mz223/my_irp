@@ -152,6 +152,10 @@ export function Figure7(props){    // props => data
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure7</div>
             <div className="subpage-intro">The storage capacity of different basins may be limited by the pressure constraints due to their thinner or less permeable reservoirs or by the number of injection sites. To explore the pattern of limiting factors for each scenario, the chart below depicts the percentage of storage resource impacted by these two limitations after 30 and 80 years for different scenarios.<br/> Clicking on the legend allows for the display of specific limitations to be toggled off.<br/> It can be observed that pressure limitations systematically increase as expected with decreased site spacing and an increased number of sites. Additionally, pressure limitations are a pervasive feature of large-scale CCS deployment.</div>
+            <div className="duation-div">
+                <h2>Duration = 30</h2>
+                <h2>Duration = 80</h2>
+            </div>
             <div className="data-map-box">
                 <div>
                     <ChartComponentFigure7 data={statisticData} duration='30' />

@@ -158,6 +158,10 @@ export function Figure9(props){    // props => data
                 <br/>In regions without a history of hydrocarbon exploration, the uncertainty of the subsurface geology is greater. This can lead to bottlenecks when developing new CCS projects. To illustrate this, CCS is only deployed in basins with more than 100 hydrocarbon wells. The figure below shows that limiting deployment to these basins does not significantly impact our storage resource estimates. On average, excluding basins without hydrocarbon experience, our storage resource estimate decreases by 17%.
                 <br/>Another factor hindering CCS deployment is governmental support and the readiness of countries for deployment. The figure below demonstrates that the readiness of countries is the most limiting factor in our storage resource estimates.
             </div>
+            <div className="duation-div">
+                <h2>Duration = 30</h2>
+                <h2>Duration = 80</h2>
+            </div>
             <div className="data-map-box">
                 <div>
                     <ChartComponentFigure9 data={statisticData} duration='30' />

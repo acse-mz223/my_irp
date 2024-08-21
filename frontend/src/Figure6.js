@@ -309,6 +309,10 @@ export function Figure6(props){
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
             <div className="subpage-title">Figure6</div>
             <div className="subpage-intro">Analyzing the contribution of different regions to CCS resources plays a crucial role from a global perspective. The figure below uses stacked bar charts to depict the storage capacity of different regions after 30 and 80 years under 12 scenarios and the M scenario. <br/>Clicking on the legend allows for the specific region to be toggled off.</div>
+            <div className="duation-div">
+                    <h2>Duration = 30</h2>
+                    <h2>Duration = 80</h2>
+            </div>
             <div className="data-map-box">
                 <div>
                     <ChartComponent data={statisticData} duration='30' legendStates={legendStates} setLegendStates={setLegendStates}/>
@@ -321,7 +325,7 @@ export function Figure6(props){
             <div className="subpage-intro">Analyzing the contribution of different regions to CCS resources is crucial from a global perspective. To more clearly compare which regions contribute the most and the least to capacity in each scenario, pie charts for different scenarios after 30 and 80 years are drawn below. A selection box allows for choosing a specific scenario to generate the pie charts. Clicking on the legend enables the display of specific regions to be toggled off.</div>
             <div className="data-pie-box">
                 <FilterScenario setFilterScenario={setFilterScenario} filterScenario={filterScenario} />
-                <div className="die-pie-filter-box">
+                <div className="duation-div">
                     <h2>Duration = 30</h2>
                     <h2>Duration = 80</h2>
                 </div>
