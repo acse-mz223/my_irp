@@ -208,7 +208,7 @@ function FilterRegion(props){
     return (
         <div className="filter-input">
             <div className="filter-input-name">Regions:</div>
-            <select className="filter-input-selector" onChange={(event) =>{props.setFilterRegion(event.target.value)}}>
+            <select className="filter-input-selector" onChange={(event) =>{props.setFilterRegion(event.target.value)}} value={props.filterRegion}>
                 {optionArray()}
             </select>
         </div>
