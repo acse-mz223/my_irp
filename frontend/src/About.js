@@ -53,6 +53,8 @@ export function About(props){
     const secondText = useRef(null);
     const thirdImage = useRef(null);
     const thirdText = useRef(null);
+    const blcok2Title = useRef(null)
+    const blcok3Title = useRef(null)    
 
     const scrollLeft = (ref) =>{
         gsap.fromTo(ref.current,{
@@ -88,13 +90,37 @@ export function About(props){
         })
     }
 
+    // title
+    const blockTitleStroll = (ref) =>{
+        gsap.fromTo(ref.current, {
+            yPercent: -200,
+            opacity: 0
+        },{
+            yPercent: 0,
+            opacity: 1,
+            scrollTrigger:{
+                trigger: ref.current,
+                scrub: true,
+                start: 'top 70%',
+                end: 'bottom 40%',
+            },
+        })
+    }
+    
+
     useEffect(()=>{
         // left
         scrollLeft(secondImage)
         scrollLeft(thirdText)
+        // right
         scrollRight(secondText)
         scrollRight(thirdImage)
+        // title
+        blockTitleStroll(blcok2Title)
+        blockTitleStroll(blcok3Title)
     },[])
+
+
 
     return (
         <div className={`subpage ${props.menuHidden && "subpage-full"}`}>
@@ -104,9 +130,9 @@ export function About(props){
                     <img ref={blockBgRef} className="main-block-background" src="./main-background.png"></img>
                     <div className="main-block-filter"></div>
                     <div className="main-block-text">
-                        <p className="main-block-title">Title</p>
+                        <p className="block-title">A web-based simulator and database for modelling scenarios of CO2 storage scaleup around the world</p>
                         <p className="main-block-intro">
-                            I particularly resonate with the company's core values of "High Goals" and "Support." While exploring your website, I noticed these values align closely with my own work ethic. I believe that a relaxed and supportive cultural atmosphere is crucial in a vibrant and evolving company. Such an environment not only allows employees to pursue the careers they love with the support of the company but also encourages them to set higher goals. By doing so, employees can enhance their professional capabilities and contribute more to the company's ongoing development.
+                            The simulator takes over 80,000 hydrocarbon reservoirs data from The Wood Mackenzie field reservoirs database (Wood Mackenzie, 2018) into the CO2Block model. It will calculate the CO2 storage data mass and the maximum sustainable per-well injection rate under different durations. The project aims to systematically and automatically generate multi-layered, multi-perspective data charts to assist in analyzing the CO2 storage limitations, potential capacities, and other relevant factors across global regional basins. This will provide robust informational support for researchers in different areas, helping them to more effectively assess and plan local CCS strategies.
                         </p>
                     </div>
                     <img src="./arrow_icon.png" className="main-block-arrow" onClick={rollToSecondBlock}/>
@@ -114,9 +140,9 @@ export function About(props){
                 <div className="second-block" ref={scrollTarget}>
                     <img className="second-block-image" ref={secondImage} src="./paper-chart.png" />
                     <div className="second-block-text" ref={secondText}>
-                        <div className="main-block-title">title</div>
+                        <div className="block-title sub-block-title" ref={blcok2Title}>Global Analysis of Geological Co2 Storage by Pressure-Limited Injection Sites</div>
                         <div className="second-block-intro">
-                            I particularly resonate with the company's core values of "High Goals" and "Support." While exploring your website, I noticed these values align closely with my own work ethic. I believe that a relaxed and supportive cultural atmosphere is crucial in a vibrant and evolving company. Such an environment not only allows employees to pursue the careers they love with the support of the company but also encourages them to set higher goals. By doing so, employees can enhance their professional capabilities and contribute more to the company's ongoing development.
+                            We produce a global estimate of CO2 storage resource that accounts for pressure-limits within basin-scale reservoir systems. We use a dynamic physics model of reservoir pressurisation that is sufficiently simple to be incorporated into energy systems models. Our estimates address regionally inconsistent methodologies and the general lack of consideration for pressure limitations in global storage resource estimates. We estimate a maximum pressure-limited resource base and explore scenarios with different injection patterns, and scenarios where the extent of CCS deployment is limited by the history of regional hydrocarbon exploration and the readiness of countries for deployment. 
                         </div>
                         <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4752727" target="_blank" className="about-link">
                             <PaperIcon className="about-link-icon" />
@@ -126,9 +152,9 @@ export function About(props){
                 </div>
                 <div className="third-block">
                     <div className="third-block-text" ref={thirdText}>
-                        <div className="main-block-title">title</div>
+                        <div className="block-title sub-block-title" ref={blcok3Title}>A tool for first order estimates and optimisation of dynamic storage resource capacity in saline aquifers</div>
                         <div className="second-block-intro">
-                            I particularly resonate with the company's core values of "High Goals" and "Support." While exploring your website, I noticed these values align closely with my own work ethic. I believe that a relaxed and supportive cultural atmosphere is crucial in a vibrant and evolving company. Such an environment not only allows employees to pursue the careers they love with the support of the company but also encourages them to set higher goals. By doing so, employees can enhance their professional capabilities and contribute more to the company's ongoing development.
+                        We develop a methodology for the fast assessment of the dynamic storage resource of a reservoir under different scenarios of well numbers and interwell distance. The approach combines the use of a single-well multiphase analytical solution and the superposition of pressure responses to evaluate the pressure buildup in a multiwell scenario. The injectivity is directly estimated by means of a nonlinear relationship between flow-rate and overpressure and by imposing a limiting overpressure, which is evaluated on the basis of the mechanical parameters for failure. The methodology is implemented within a tool, named CO2BLOCK, which can optimise site design for the numbers of wells and spacing between wells. Given its small computational expense, the methodology can be applied to a large number of sites within a region.
                         </div>
                         <a href="https://www.sciencedirect.com/science/article/abs/pii/S1750583621000104?via%3Dihub" target="_blank" className="about-link">
                             <PaperIcon className="about-link-icon" />

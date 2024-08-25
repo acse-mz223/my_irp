@@ -68,10 +68,16 @@
     bottom: 8%;
 }
 
-.main-block-title{
+.block-title{
     font-weight: bolder;
-    font-size: 50px;
+    font-size: 30px;
     margin-bottom: 20px;
+    width: 40%;
+
+}
+
+.sub-block-title{
+    width: 70%;
 }
 
 .main-block-intro{
@@ -84,7 +90,6 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: antiquewhite;
 }
 
 .second-block-image{
@@ -121,6 +126,7 @@
     margin: 10px 0;
     padding: 12px 15px;
     border-radius: 10px;
+    border: 4px solid rgb(75, 160, 251);
     width: 130px;
     font-size: 20px;
     transition: color 0.5s, background-color 0.5s;
@@ -133,8 +139,6 @@
 
 .about-link:hover{
     background-color: rgb(255, 255, 255);
-    border: 4px solid rgb(75, 160, 251);
-    padding: 9px 11px;
     color: rgb(75, 160, 251);
 }
 
@@ -154,7 +158,6 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: antiquewhite;
     margin-top: 10vh;
     margin-bottom: 10vh;
 }
