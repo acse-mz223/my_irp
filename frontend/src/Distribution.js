@@ -236,24 +236,14 @@ function BasicInforBoard({basinInfor}){
     const inforHeader=["Basin Name","Basin Size Label","Majority Country","Attributing Countries","Region","Location Longitude","Location Latitude","QGIS Poly Area (km^2)","Well Count"]
     return (
         <div className='basic-infor-board'>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Basic info</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {inforHeader.map((property) =>{
-                        return(
-                            <tr>
-                                <td>{property}</td>
-                                <td>{basinInfor[property]}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+            {inforHeader.map((property) =>{
+            return(
+                <div className='basic-infor-board-feature-box'>
+                    <div className='basic-infor-board-feature-key'>{`${property}:`}</div>
+                    <div className='basic-infor-board-feature-value'>{basinInfor[property]}</div>
+                </div>
+            )
+        })}
         </div>
     )
 
@@ -427,8 +417,10 @@ export function Distribution(props){
                 <div className='one-board' key={basinName.replace(/\s+/g, '')}>
                     <DeleteButton className="delete-button" onClick={() =>{deleteOneBoard(basinName.replace(/\s+/g, ''))}}/>
                     <div className="one-board-title">{basinName}</div>
-                    <BasicInforBoard basinInfor={basinInfor}/>
-                    <CampacityInforBoard basinInfor={basinInfor}/>
+                    <div className='one-board-infobox'>
+                        <BasicInforBoard basinInfor={basinInfor}/>
+                        <CampacityInforBoard basinInfor={basinInfor}/>
+                    </div>
                 </div>
             ) 
             // board
