@@ -1,7 +1,7 @@
 .subpage{
     display: flex;
     flex-direction: column;
-    width: 86%;
+    width: 80%;
     align-items: center;
     padding: 10px;
     margin-left: 1%;
@@ -14,7 +14,10 @@
 }
 
 .subpage-title{
-    padding: 10px;
+    display: block;
+    width: 100%;
+    padding: 10px 10px 10px 50px;
+    
     font-weight: bolder;
     font-size: 30px;
 }
@@ -29,7 +32,7 @@
 }
 
 .data-box{
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 10px;
     overflow: scroll;
     width: 95%;

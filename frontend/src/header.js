@@ -18,7 +18,9 @@ export function Header(props){
               <span className={`header-menu-dash ${props.menuHidden? "": "header-menu-dash-2"}`}></span>
               <span className={`header-menu-dash ${props.menuHidden? "": "header-menu-dash-3"}`}></span>
             </div>
-            <img className='header-icon' src="./logo.jpg" />
+            <div className='header-icon'>
+              <img className='header-icon-pic' src="./user.png" />
+            </div>
           </div>
           <div className='header-title'>CO2 Block  Preload Analysis System </div>
           <div className='header-signin-button'></div>
